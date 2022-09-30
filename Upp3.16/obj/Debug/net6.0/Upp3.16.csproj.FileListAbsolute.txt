@@ -1,0 +1,15 @@
+C:\Users\Admin\source\repos\Bergqvist1\Programmering1-Ameen\uppgift.2.12-SimonB\Upp3.16\obj\Debug\net6.0\Upp3.16.csproj.AssemblyReference.cache
+C:\Users\Admin\source\repos\Bergqvist1\Programmering1-Ameen\uppgift.2.12-SimonB\Upp3.16\obj\Debug\net6.0\Upp3.16.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\source\repos\Bergqvist1\Programmering1-Ameen\uppgift.2.12-SimonB\Upp3.16\obj\Debug\net6.0\Upp3.16.AssemblyInfoInputs.cache
+C:\Users\Admin\source\repos\Bergqvist1\Programmering1-Ameen\uppgift.2.12-SimonB\Upp3.16\obj\Debug\net6.0\Upp3.16.AssemblyInfo.cs
+C:\Users\Admin\source\repos\Bergqvist1\Programmering1-Ameen\uppgift.2.12-SimonB\Upp3.16\obj\Debug\net6.0\Upp3.16.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\Bergqvist1\Programmering1-Ameen\uppgift.2.12-SimonB\Upp3.16\bin\Debug\net6.0\Upp3.16.exe
+C:\Users\Admin\source\repos\Bergqvist1\Programmering1-Ameen\uppgift.2.12-SimonB\Upp3.16\bin\Debug\net6.0\Upp3.16.deps.json
+C:\Users\Admin\source\repos\Bergqvist1\Programmering1-Ameen\uppgift.2.12-SimonB\Upp3.16\bin\Debug\net6.0\Upp3.16.runtimeconfig.json
+C:\Users\Admin\source\repos\Bergqvist1\Programmering1-Ameen\uppgift.2.12-SimonB\Upp3.16\bin\Debug\net6.0\Upp3.16.dll
+C:\Users\Admin\source\repos\Bergqvist1\Programmering1-Ameen\uppgift.2.12-SimonB\Upp3.16\bin\Debug\net6.0\Upp3.16.pdb
+C:\Users\Admin\source\repos\Bergqvist1\Programmering1-Ameen\uppgift.2.12-SimonB\Upp3.16\obj\Debug\net6.0\Upp3.16.dll
+C:\Users\Admin\source\repos\Bergqvist1\Programmering1-Ameen\uppgift.2.12-SimonB\Upp3.16\obj\Debug\net6.0\refint\Upp3.16.dll
+C:\Users\Admin\source\repos\Bergqvist1\Programmering1-Ameen\uppgift.2.12-SimonB\Upp3.16\obj\Debug\net6.0\Upp3.16.pdb
+C:\Users\Admin\source\repos\Bergqvist1\Programmering1-Ameen\uppgift.2.12-SimonB\Upp3.16\obj\Debug\net6.0\Upp3.16.genruntimeconfig.cache
+C:\Users\Admin\source\repos\Bergqvist1\Programmering1-Ameen\uppgift.2.12-SimonB\Upp3.16\obj\Debug\net6.0\ref\Upp3.16.dll
