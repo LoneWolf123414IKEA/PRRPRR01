@@ -1,5 +1,5 @@
-primes = [2]
-for i in range (3, 10000, 2):
+primes = [3]
+for i in range (5, 10000, 2):
     result = True
     for t in primes:
         if i%t == 0:
@@ -8,4 +8,5 @@ for i in range (3, 10000, 2):
     if result:
         primes.append(i)
 primes.insert(0, 1)
+primes.insert(1, 2)
 print(primes)
