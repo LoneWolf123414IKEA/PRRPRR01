@@ -1,0 +1,15 @@
+C:\Users\Admin\source\repos\textbasedadventure\textbasedadventure\obj\Debug\net6.0\textbasedadventure.csproj.AssemblyReference.cache
+C:\Users\Admin\source\repos\textbasedadventure\textbasedadventure\obj\Debug\net6.0\textbasedadventure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\source\repos\textbasedadventure\textbasedadventure\obj\Debug\net6.0\textbasedadventure.AssemblyInfoInputs.cache
+C:\Users\Admin\source\repos\textbasedadventure\textbasedadventure\obj\Debug\net6.0\textbasedadventure.AssemblyInfo.cs
+C:\Users\Admin\source\repos\textbasedadventure\textbasedadventure\obj\Debug\net6.0\textbasedadventure.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\textbasedadventure\textbasedadventure\bin\Debug\net6.0\textbasedadventure.exe
+C:\Users\Admin\source\repos\textbasedadventure\textbasedadventure\bin\Debug\net6.0\textbasedadventure.deps.json
+C:\Users\Admin\source\repos\textbasedadventure\textbasedadventure\bin\Debug\net6.0\textbasedadventure.runtimeconfig.json
+C:\Users\Admin\source\repos\textbasedadventure\textbasedadventure\bin\Debug\net6.0\textbasedadventure.dll
+C:\Users\Admin\source\repos\textbasedadventure\textbasedadventure\bin\Debug\net6.0\textbasedadventure.pdb
+C:\Users\Admin\source\repos\textbasedadventure\textbasedadventure\obj\Debug\net6.0\textbasedadventure.dll
+C:\Users\Admin\source\repos\textbasedadventure\textbasedadventure\obj\Debug\net6.0\refint\textbasedadventure.dll
+C:\Users\Admin\source\repos\textbasedadventure\textbasedadventure\obj\Debug\net6.0\textbasedadventure.pdb
+C:\Users\Admin\source\repos\textbasedadventure\textbasedadventure\obj\Debug\net6.0\textbasedadventure.genruntimeconfig.cache
+C:\Users\Admin\source\repos\textbasedadventure\textbasedadventure\obj\Debug\net6.0\ref\textbasedadventure.dll
