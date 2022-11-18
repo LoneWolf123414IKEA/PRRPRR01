@@ -55,7 +55,7 @@ namespace tba
                 if (Console.ReadLine() == "loot")
                 {
                     temp = rand.Next(99);
-                    if (temp < 49 && inv.Count() <= maxinv)
+                    if (temp < 40 && inv.Count() <= maxinv)
                     {
                         temp = rand.Next(items.Length);
                         Console.WriteLine("do you want " + items[temp] + "?");
@@ -64,7 +64,7 @@ namespace tba
                             inv.Add(temp);
                         }
                     }
-                    else if (temp < 49 && inv.Count() > maxinv)
+                    else if (temp < 40 && inv.Count() > maxinv)
                     {
                         temp = rand.Next(items.Length);
                         Console.WriteLine("do you want " + items[temp] + "?");
@@ -102,6 +102,11 @@ namespace tba
                             wepinv.RemoveAt(int.Parse(Console.ReadLine()) - 1);
                             wepinv.Add(temp);
                         }
+                    }
+                    else if (temp > 40 && temp < 42)
+                    {
+                        res += rand.Next(1, 15)/100;
+                        Console.WriteLine("You found some armour");
                     }
                     else
                     {
@@ -151,6 +156,7 @@ namespace tba
                                     }
                                     break;
                                 case "3":
+                                    res -= 0.5F;
                                     break;
                                 default:
                                     break;
