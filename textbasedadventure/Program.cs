@@ -22,7 +22,7 @@ namespace tba
                 {
                     case "skeleton":
                         ehp = rand.Next(10, 21);
-                        eres = rand.Next(5, 14)´/100;
+                        eres = rand.Next(5, 14)/100;
                         edmg = rand.Next(5, 11);
                         while (ehp > 0 && hp > 0)
                         {
@@ -41,7 +41,7 @@ namespace tba
                                     }
                                     else
                                     {
-                                        tempdmg = rand.Next(dmg, dmg + 5) - 10;
+                                        tempdmg = rand.Next(dmg, dmg + 5)*(1-eres);
                                         Console.WriteLine("Enemy resisted");
                                     }
                                     break;
@@ -58,7 +58,7 @@ namespace tba
                             }
                             else
                             {
-                                etempdmg = rand.Next(edmg, edmg + 5) - 10;
+                                etempdmg = rand.Next(edmg, edmg + 5)*(1-res);
                                 Console.WriteLine("You resisted");
                             }
                             Console.WriteLine($"You did {tempdmg} damage\nYou lost {etempdmg} health");
