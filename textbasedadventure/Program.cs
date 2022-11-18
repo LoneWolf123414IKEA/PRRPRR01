@@ -14,23 +14,43 @@ namespace tba
             { 
                 "wooden sword",
                 "club",
-                "Needle"
+                "Needle",
+                "ancent sword"
             };
             int[] weaponsdmg = 
             { 
                 10, 
                 11,
-                4242
+                4242,
+                -10
             };
             string[] items = 
             { 
-                "small heal", 
-                "smaller heal" 
+                "small heal", //0
+                "smaller heal", //1
+                "smaller heal", //2
+                "smaller heal", //3
+                "smaller heal", //4
+                "smaller heal", //5
+                "smaller heal", //6
+                "smaller heal", //7
+                "smaller heal", //8
+                "Medkit", //9
+                "Stimpack" //1
             };
             float[] itemssstt = 
             { 
                 1, 
-                0.1F 
+                0.1F, 
+                0.1F, 
+                0.1F, 
+                0.2F, 
+                0.1F, 
+                0.01F, 
+                0.1F, 
+                0.1F,
+                100,
+                20
             };
             List<int> wepinv = new List<int>();
             wepinv.add(3);
@@ -82,6 +102,10 @@ namespace tba
                     else if (temp > 12 && wepinv.Count() <= maxwep)
                     {
                         temp = rand.Next(weapons.Length);
+                        if (temp == 2)
+                        {
+                            temp = 3;
+                        }
                         Console.WriteLine("do you want " + weapons[temp] + "?");
                         if (Console.ReadLine() == "yes")
                         {
@@ -91,6 +115,10 @@ namespace tba
                     else if (temp > 12 && wepinv.Count() > maxwep)
                     {
                         temp = rand.Next(weapons.Length);
+                        if (temp == 2)
+                        {
+                            temp = 3;
+                        }
                         Console.WriteLine("do you want " + weapons[temp] + "?");
                         if (Console.ReadLine() == "yes")
                         {
@@ -154,6 +182,21 @@ namespace tba
                                         temp = int.Parse(Console.ReadLine()) - 1;
                                         tempdmg = rand.Next(weaponsdmg[temp], weaponsdmg[temp] + 5);
                                     }
+                                    else
+                                    {
+                                        Console.WriteLine("choose heal");
+                                        for (int i = 0; i < inv.Count(); i++)
+                                        {
+                                            Console.WriteLine((i + 1) + " " + items[inv[i]]);
+                                        }
+                                        temp = int.Parse(Console.ReadLine()) - 1;
+                                        if (temp == 9)
+                                        {
+                                            res -= 0.1F;
+                                            dmg -= 2;
+                                        }
+                                        hp += itemssstt[temp];
+                                    }
                                     break;
                                 case "3":
                                     res -= 0.5F;
@@ -177,6 +220,78 @@ namespace tba
                         }
                         break;
                     case "knight":
+                        ehp = rand.Next(23, 31);
+                        eres = rand.Next(95, 100) / 100;
+                        edmg = rand.Next(15, 20);
+                        while (ehp > 0 && hp > 0)
+                        {
+                            Console.Clear();
+                            Console.WriteLine($"Skeleton:\nHp: {ehp}\nRes: {eres}\nDmg: {edmg}-{edmg + 5}\n\nPlayer:\nHp: {hp}\nRes: {res}\nDmg: {dmg}-{dmg + 5}\n");
+                            Console.WriteLine("1. attack 2. item 3. run");
+                            opt = Console.ReadLine();
+                            tempdmg = 0;
+                            Console.Clear();
+                            switch (opt)
+                            {
+                                case "1":
+                                    Console.WriteLine();
+                                    if (rand.Next(100) < 88)
+                                    {
+                                        tempdmg = rand.Next(dmg, dmg + 5);
+                                    }
+                                    else
+                                    {
+                                        tempdmg = rand.Next(dmg, dmg + 5) * (1 - eres);
+                                        Console.WriteLine("Enemy resisted");
+                                    }
+                                    break;
+                                case "2":
+                                    Console.WriteLine("1. attack\n2. heal");
+                                    if (Console.ReadLine() == "1")
+                                    {
+                                        Console.WriteLine("choose weapon");
+                                        for (int i = 0; i < wepinv.Count(); i++)
+                                        {
+                                            Console.WriteLine((i + 1) + " " + weapons[wepinv[i]]);
+                                        }
+                                        temp = int.Parse(Console.ReadLine()) - 1;
+                                        tempdmg = rand.Next(weaponsdmg[temp], weaponsdmg[temp] + 5);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("choose heal");
+                                        for (int i = 0; i < inv.Count(); i++)
+                                        {
+                                            Console.WriteLine((i + 1) + " " + items[inv[i]]);
+                                        }
+                                        temp = int.Parse(Console.ReadLine()) - 1;
+                                        if (temp == 9)
+                                        {
+                                            res -= 0.1F;
+                                            dmg -= 2;
+                                        }
+                                        hp += itemssstt[temp];
+                                    }
+                                    break;
+                                case "3":
+                                    res -= 0.5F;
+                                    break;
+                                default:
+                                    break;
+                            }
+                            if (rand.Next(100) < 88)
+                            {
+                                etempdmg = rand.Next(edmg, edmg + 5);
+                            }
+                            else
+                            {
+                                etempdmg = rand.Next(edmg, edmg + 5) * (1 - res);
+                                Console.WriteLine("You resisted");
+                            }
+                            Console.WriteLine($"You did {tempdmg} damage\nYou lost {etempdmg} health");
+                            hp -= etempdmg;
+                            ehp -= tempdmg;
+                            Console.ReadKey();
                         break;
                     default:
                         break;
