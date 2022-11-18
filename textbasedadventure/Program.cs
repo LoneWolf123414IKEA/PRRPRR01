@@ -7,10 +7,10 @@ namespace tba
         {
             string[] enemy = { "skeleton", "knight" };
             Random rand = new Random();
-            int hp = 125;
+            float hp = 125;
             float res = 0.1;
             int dmg = 5;
-            int ehp;
+            float ehp;
             float eres;
             int edmg;
             int tempdmg;
