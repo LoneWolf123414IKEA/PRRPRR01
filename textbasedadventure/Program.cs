@@ -6,6 +6,12 @@ namespace tba
         static void Main(string[] args)
         {
             string[] enemy = { "skeleton", "knight" };
+            var[] weapons = {"wooden sword", 1, "club", 2};
+            var[] weapons = {"small heal", 1, "smaller heal", 0.1};
+            List<int> wepinv = new List<int>();
+            List<int> inv = new List<int>();
+            int maxwep = 3;
+            int maxinv = 6;
             Random rand = new Random();
             float hp = 125;
             float res = 0.1;
