@@ -6,21 +6,23 @@ namespace tba
         static void Main(string[] args)
         {
             string[] enemy = { "skeleton", "knight" };
-            var[] weapons = {"wooden sword", 1, "club", 2};
-            var[] weapons = {"small heal", 1, "smaller heal", 0.1};
+            string[] weapons = { "wooden sword", "club"};
+            float[] weaponsdmg = {1, 2 };
+            string[] items = { "small heal", "smaller heal"};
+            float[] itemssstt = { 1, 0.1F };
             List<int> wepinv = new List<int>();
             List<int> inv = new List<int>();
             int maxwep = 3;
             int maxinv = 6;
             Random rand = new Random();
             float hp = 125;
-            float res = 0.1;
+            float res = 0.1F;
             int dmg = 5;
             float ehp;
             float eres;
             int edmg;
-            int tempdmg;
-            int etempdmg;
+            float tempdmg;
+            float etempdmg;
             string opt;
             while (hp > 0)
             {
@@ -28,7 +30,7 @@ namespace tba
                 {
                     case "skeleton":
                         ehp = rand.Next(10, 21);
-                        eres = rand.Next(5, 14)/100;
+                        eres = rand.Next(5, 14) / 100;
                         edmg = rand.Next(5, 11);
                         while (ehp > 0 && hp > 0)
                         {
@@ -47,7 +49,7 @@ namespace tba
                                     }
                                     else
                                     {
-                                        tempdmg = rand.Next(dmg, dmg + 5)*(1-eres);
+                                        tempdmg = rand.Next(dmg, dmg + 5) * (1 - eres);
                                         Console.WriteLine("Enemy resisted");
                                     }
                                     break;
@@ -64,7 +66,7 @@ namespace tba
                             }
                             else
                             {
-                                etempdmg = rand.Next(edmg, edmg + 5)*(1-res);
+                                etempdmg = rand.Next(edmg, edmg + 5) * (1 - res);
                                 Console.WriteLine("You resisted");
                             }
                             Console.WriteLine($"You did {tempdmg} damage\nYou lost {etempdmg} health");
@@ -77,7 +79,7 @@ namespace tba
                         break;
                     default:
                         break;
-     
+
                 }
             }
         }
