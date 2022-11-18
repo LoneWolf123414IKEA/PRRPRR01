@@ -13,12 +13,14 @@ namespace tba
             string[] weapons = 
             { 
                 "wooden sword",
-                "club" 
+                "club",
+                "Needle"
             };
             int[] weaponsdmg = 
             { 
                 10, 
-                11 
+                11,
+                4242
             };
             string[] items = 
             { 
@@ -31,12 +33,13 @@ namespace tba
                 0.1F 
             };
             List<int> wepinv = new List<int>();
+            wepinv.add(3);
             List<int> inv = new List<int>();
             int maxwep = 1;
             int maxinv = 2;
             Random rand = new Random();
             float hp = 125;
-            float res = 0.1F;
+            float res = 0.05F;
             int dmg = 5;
             float ehp;
             float eres;
