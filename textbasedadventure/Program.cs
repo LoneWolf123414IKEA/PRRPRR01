@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.Linq;
 
@@ -73,7 +74,7 @@ namespace tba
                 "knight",
                 "knight",
                 "knight",
-                "bbbg"
+                "bbeg"
             };
             string[] items =
             {
@@ -81,16 +82,16 @@ namespace tba
                 "club",
                 "Needle",
                 "ancent sword",
-                "small heal", 
-                "smaller heal", 
+                "small heal",
                 "smaller heal",
-                "smaller heal", 
-                "smaller heal", 
-                "smaller heal", 
-                "smaller heal", 
-                "smaller heal", 
-                "smaller heal", 
-                "Medkit", 
+                "smaller heal",
+                "smaller heal",
+                "smaller heal",
+                "smaller heal",
+                "smaller heal",
+                "smaller heal",
+                "smaller heal",
+                "Medkit",
                 "Stimpack",
                 "small heal",
                 "small heal",
@@ -112,15 +113,25 @@ namespace tba
             string opt;
             int temp;
             var templist = new List<float>();
-            string name = "bbbe";
+            string name = "bbeg";
+            int xp = 0;
+            int next = 1000;
+            int kills = 0;
             while (hp > 0)
             {
                 Console.Clear();
-                Console.WriteLine("do you want too \"loot\" or \"kick door\"");
-                if (Console.ReadLine() == "loot")
+                Console.WriteLine("do you want too \"loot\", see your \"stats\", or \"kick door\"");
+                opt = Console.ReadLine();
+                if (opt == "loot")
                 {
                     temp = rand.Next(99);
-                    if (temp < 40 && inv.Count() <= maxinv)
+                    if(xp > next)
+                    {
+                        maxinv++;
+                        Console.WriteLine("you found a small backpack!");
+                        next += 1000;
+                    }
+                    else if (temp < 40 && inv.Count() <= maxinv)
                     {
                         temp = rand.Next(items.Length);
                         Console.WriteLine("do you want " + items[temp] + "?");
@@ -144,16 +155,28 @@ namespace tba
                             inv.Add(temp);
                         }
                     }
-                    else if (temp > 12)
+                    else if (temp < 52)
                     {
-                        res += rand.Next(1, 15) / 100;
+                        res += rand.Next(0, xp) / 100;
                         Console.WriteLine("You found some armour");
+                        Console.ReadKey();
                     }
                     else
                     {
                         Console.WriteLine("you found nothing");
                         Console.ReadKey();
                     }
+                }
+                else if(opt == "stats")
+                {
+                    Console.Clear();
+                    Console.WriteLine($"player:\nHp: {hp}\nResistance: {res * 100}%\nbase damage: {dmg}-{dmg+5}\nLvL: {xp/1000+1} Xp: {xp}\nKills: {kills}\nInventory size: {maxinv+1}\n\n");
+                    Console.WriteLine("inventory:");
+                    for (int i = 0; i < inv.Count(); i++)
+                    {
+                        Console.WriteLine((i) + " " + items[inv[i]]);
+                    }
+                    Console.ReadKey();
                 }
                 switch (enemy[rand.Next(enemy.Length)])
                 {
@@ -175,7 +198,7 @@ namespace tba
                         eres = 1.5F;
                         edmg = 20;
                         res -= 0.1F;
-                        break;   
+                        break;
                 }
 
                 while (ehp > 0 && hp > 0)
@@ -221,6 +244,7 @@ namespace tba
                                             res -= 0.1F;
                                             dmg -= 2;
                                             hp += 100;
+                                            inv.RemoveAt(temp);
                                             break;
                                         default:
                                             break;
@@ -232,6 +256,7 @@ namespace tba
                                     break;
                                 case 2:
                                     hp += templist[1];
+                                    inv.RemoveAt(temp);
                                     break;
                                 default:
                                     break;
@@ -258,6 +283,11 @@ namespace tba
                     hp -= etempdmg;
                     ehp -= tempdmg;
                     Console.ReadKey();
+                    if(ehp <= 0)
+                    {
+                        xp += rand.Next(10);
+                        kills++;
+                    }
                 }
             }
         }
