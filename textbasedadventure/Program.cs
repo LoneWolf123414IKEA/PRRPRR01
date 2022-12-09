@@ -1,8 +1,4 @@
 using System;
-using System.Collections;
-using System.Security.Cryptography.X509Certificates;
-using System.Xml.Linq;
-
 namespace tba
 {
     class program
@@ -15,7 +11,8 @@ namespace tba
                 list.Add();
                 list.Add();
             }*/
-            switch (id) {
+            switch (id)
+            {
                 case 0:
                     list.Add(1);
                     list.Add(10);
@@ -25,7 +22,7 @@ namespace tba
                     list.Add(11);
                     break;
                 case 2:
-                    if(Console.ReadLine() == "Dev, #0000")
+                    if (Console.ReadLine() == "Dev, #0000")
                     {
                         list.Add(1);
                         list.Add(4242);
@@ -66,32 +63,12 @@ namespace tba
                 default:
                     list.Add(0);
                     list.Add(0);
-                break;
+                    break;
             }
             return list;
         }
         static void Main(string[] args)
         {
-            string[] enemy =
-            {
-                "skelly",
-                "skelly",
-                "skelly",
-                "skelly",
-                "skelly",
-                "skelly",
-                "skelly",
-                "skelly",
-                "skelly",
-                "knight",
-                "knight",
-                "knight",
-                "knight"
-            };
-            string[] bosses =
-            {
-                "executioner"
-            };
             string[] items =
             {
                 "wooden sword",
@@ -133,6 +110,8 @@ namespace tba
             int xp = 0;
             int next = 1000;
             int kills = 0;
+            int bsslvl = 0;
+            // todo fix bootscreen Console.WriteLine("");
             while (hp > 0)
             {
                 Console.Clear();
@@ -140,7 +119,7 @@ namespace tba
                 opt = Console.ReadLine();
                 if (opt == "loot")
                 {
-                    temp = rand.Next(99);
+                    temp = rand.Next(0, 100);
                     if (xp > next)
                     {
                         maxinv++;
@@ -211,44 +190,55 @@ namespace tba
                     }
                     Console.ReadKey();
                 }
+                temp = rand.Next(0, 1000);
                 if (xp > next)
                 {
                     next += 1000;
-                    switch (bosses[rand.Next(bosses.Length)])
+                    switch (bsslvl)
                     {
-                        case "executioner":
-                            name = "Exocutioner";
+                        case 0:
+                            name = "Judge";
                             ehp = 1260;
                             eres = 1.5F;
                             edmg = 20;
                             res -= 0.1F;
                             break;
+                        case 1:
+                            name = "Jurry";
+                            ehp = 5000;
+                            eres = 0.2F;
+                            edmg = 100;
+                            break;
+                        case 2:
+                            name = "exocutioner";
+                            ehp = 10000;
+                            eres = 10;
+                            edmg = 60;
+                            hp *= 0.8F;
+                            break;
                         default:
+                            name = "err";
+                            ehp = 1073741824;
+                            eres = 1073741824;
+                            edmg = 1073741824;
                             break;
                     }
+                    bsslvl++;
                 }
-                else
+                else if (temp < 757)
                 {
-                    switch (enemy[rand.Next(enemy.Length)])
-                    {
-                        case "skelly":
-                            name = "skeleton";
-                            ehp = rand.Next(10, 21);
-                            eres = rand.Next(5, 14) / 100;
-                            edmg = rand.Next(5, 11);
-                            break;
-                        case "knight":
-                            name = "knight";
-                            ehp = rand.Next(23, 31);
-                            eres = rand.Next(95, 100) / 100;
-                            edmg = rand.Next(15, 20);
-                            break;
-                        default:
-                            break;
-                    }
+                    name = "skeleton";
+                    ehp = rand.Next(10, 21);
+                    eres = rand.Next(5, 14) / 100;
+                    edmg = rand.Next(5, 11);
                 }
-                    
-
+                else if (temp < 1000)
+                {
+                    name = "knight";
+                    ehp = rand.Next(23, 31);
+                    eres = rand.Next(95, 100) / 100;
+                    edmg = rand.Next(15, 20);
+                }
                 while (ehp > 0 && hp > 0)
                 {
                     Console.Clear();
@@ -285,7 +275,7 @@ namespace tba
                             catch
                             {
                                 Console.WriteLine("out of range, defaulting to standard weapon");
-                                templist = new List<float> {0, 0};
+                                templist = new List<float> { 0, 0 };
                                 temp = 0;
                             }
                             switch (templist[0])
@@ -347,6 +337,164 @@ namespace tba
                     }
                 }
             }
+            Console.Clear();
+            opt = "    ,-·-.          ," +
+               "\'´¨;           , ·." +
+               " ,.-·~·.,   ‘       " +
+               ".-,             ,\'´" +
+               "¨\';\'              " +
+               "             ;\'*¨\'" +
+               "`·- .,  ‘           " +
+               "       ,.-·.        " +
+               "            _,.,  ° " +
+               "       ;\'*¨\'`·- .," +
+               "  ‘            \r\n" +
+               "    \';   \';\\     " +
+               " ,\'´  ,\':\\\'     " +
+               "   /  ·\'´,.-·-.,   " +
+               "`,\'‚       ;  \';\\" +
+               "          ,\'   \';" +
+               "\'\\\'              " +
+               "           \\`:·-,. " +
+               ",   \'` ·.  \'      " +
+               "     /    ;\'\\\'   " +
+               "        ,.·\'´  ,. ," +
+               "  `;\\ \'      \\`:·" +
+               "-,. ,   \'` ·.  \'  " +
+               "    \r\n" +
+               "     ;   \';:\\   ." +
+               "\'   ,\'´::\'\\\'   " +
+               "   /  .\'´\\:::::::" +
+               "\'\\   \'\\ °    \';" +
+               "   ;:\'\\        ,\'" +
+               "   ,\'::\'\\        " +
+               "                 \'" +
+               "\\:/   ;\\:\'`:·,  " +
+               "\'`·, \'       ;    " +
+               ";:::\\        .´   ;" +
+               "´:::::\\`\'´ \\\'\\ " +
+               "      \'\\:/   ;\\:" +
+               "\'`:·,  \'`·, \'   " +
+               "\r\n" +
+               "     \'\\   \';::;\'" +
+               "´  ,\'´::::;\'    ,·" +
+               "\'  ,\'::::\\:;:-·-:" +
+               "\';  \';\\‚    \';  " +
+               "\';::\';      ,\'   " +
+               ",\'::::;            " +
+               "              ;   ;" +
+               "\'::\\;::::\';   ;\\" +
+               "      \';    ;::::;" +
+               "\'      /   ,\'::\\:" +
+               ":::::\\:::\\:\'     " +
+               "  ;   ;\'::\\;::::\'" +
+               ";   ;\\   \r\n" +
+               "       \\  \'·:\'  ," +
+               "\'´:::::;\' \'   ;. " +
+               "  \';:::;´       ,\'" +
+               "  ,\':\'\\‚   \';  " +
+               "\';::;     ,\'   ,\'" +
+               "::::;\'             " +
+               "              ;  ,\'" +
+               ":::;  `·:;;  ,\':\'" +
+               "\\\'     ;   ;::::; " +
+               "     ;   ;:;:-·\'~^ª" +
+               "*\';\\\'´         ; " +
+               " ,\':::;  `·:;;  ,\'" +
+               ":\'\\\' \r\n" +
+               "        \'·,   ,\'::" +
+               "::::;\'´      \';   " +
+               ";::;       ,\'´ .\'´" +
+               "\\::\';‚  \';  \';::" +
+               ";    ,\'   ,\'::::;" +
+               "\'                  " +
+               "         ;   ;:::;  " +
+               "  ,·\' ,·\':::;    " +
+               "\';  ;\'::::;       " +
+               ";  ,.-·:*\'´¨\'`*´\\" +
+               "::\\ \'       ;   ;:" +
+               "::;    ,·\' ,·\':::;" +
+               " \r\n" +
+               "         ,\'  /:::::" +
+               ":;\'  \'      \';   " +
+               "\':;:   ,.·´,.·´::::" +
+               "\\;\'°   \\   \'·:_," +
+               "\'´.;   ;::::;‘     " +
+               "                    " +
+               "  ;  ;:::;\'  ,.\'´," +
+               "·´:::::;    ;  \';::" +
+               ":\';       ;   ;\\::" +
+               "::::::::::\'\\;\'   " +
+               "     ;  ;:::;\'  ,." +
+               "\'´,·´:::::; \r\n" +
+               "       ,´  \';\\::::" +
+               ";\'  \'         \\·," +
+               "   `*´,.·\'´::::::;·" +
+               "´       \\·,   ,.·´:" +
+               "\';  \';:::\';      " +
+               "                    " +
+               " \':,·:;::-·´,.·´\\:" +
+               "::::;´\'     \';  ;:" +
+               ":::;\'      ;  ;\'_" +
+               "\\_:;:: -·^*\';\\   " +
+               "    \':,·:;::-·´,.·´" +
+               "\\:::::;´\'  \r\n" +
+               "       \\`*ª\'´\\\\:" +
+               ":/‘             \\\\" +
+               ":¯::\\:::::::;:·´   " +
+               "        \\:\\¯\\::::" +
+               ":\\`*´\\::;  \'     " +
+               "                    " +
+               " \\::;. -·´:::::;\\;" +
+               "·´         \\*´\\:::" +
+               ";‘      \';    ,  ,." +
+               " -·:*\'´:\\:\'\\°   " +
+               "   \\::;. -·´:::::;" +
+               "\\;·´     \r\n" +
+               "        \'\\:::::\\" +
+               "\';  \'             " +
+               "`\\:::::\\;::·\'´  °" +
+               "              `\'\\:" +
+               ":\\;:·´\'\\:::\'\\\'" +
+               "   \'               " +
+               "            \\;\'\\:" +
+               ":::::::;·´\'        " +
+               "     \'\\::\\:;\'   " +
+               "     \\`*´ ¯\\::::::" +
+               ":::::\\;\' \'      " +
+               "\\;\'\\::::::::;·´\'" +
+               "        \r\n" +
+               "          `*ª\'´‘   " +
+               "                  ¯ " +
+               "                    " +
+               "                `*´°" +
+               "                    " +
+               "             `\\;::-" +
+               "·´                  " +
+               " `*´‘           \\::" +
+               ":::\\;::-·^*\'´     " +
+               "         `\\;::-·´  " +
+               "          \r\n" +
+               "            \'      " +
+               "                   ‘" +
+               "                    " +
+               "                  \'" +
+               "                    " +
+               "                    " +
+               "                    " +
+               "                    " +
+               "`*´¯                " +
+               "                    " +
+               "       ";
+            Console.WriteLine(opt);
+            Console.WriteLine($"player:\nHp: {hp}\nResistance: {res * 100}%\nbase damage: {dmg}-{dmg + 5}\nLvL: {xp / 1000 + 1} Xp: {xp}\nKills: {kills}\nInventory size: {maxinv + 1}\n\n");
+            Console.WriteLine("inventory:");
+            for (int i = 0; i < inv.Count(); i++)
+            {
+                Console.WriteLine((i) + " " + items[inv[i]]);
+            }
+            Console.ReadKey();
+
         }
     }
 }
