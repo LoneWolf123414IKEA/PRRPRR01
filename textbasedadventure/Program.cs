@@ -111,7 +111,59 @@ namespace tba
             int next = 1000;
             int kills = 0;
             int bsslvl = 0;
-            // todo fix bootscreen Console.WriteLine("");
+            for(int i = 0; i < 15; i++)
+            {
+                Console.WriteLine("______________________________________________");
+                Console.WriteLine("|                                            |");
+                Console.WriteLine("|                                            |");
+                Console.WriteLine("|                                            |");
+                Console.WriteLine("|                                            |");
+                Console.WriteLine("|                                            |");
+                Console.WriteLine("|                   Booting                  |");
+                Console.WriteLine("|                                            |");
+                if (i == 0) Console.WriteLine("|                     0%                     |");
+                else if (i == 1) Console.WriteLine("|                     6%                     |");
+                else if (i%2 == 0) Console.WriteLine($"|                     {i*6.5}%                    |");
+                else Console.WriteLine($"|                    {i * 6.5}%                   |");
+                Console.Write("|               ");
+                for(int j = 0; j < i; j++)
+                {
+                    Console.Write("|");
+                }
+                for (int j = 0; j < (15 - i); j++)
+                {
+                    Console.Write(" ");
+                }
+                Console.Write("              |\n");
+                Console.WriteLine("|                                            |");
+                Console.WriteLine("|                                            |");
+                Console.WriteLine("|                                            |");
+                Console.WriteLine("|                                            |");
+                Console.WriteLine("|                                            |");
+                Console.WriteLine("----------------------------------------------");
+                Thread.Sleep(rand.Next(1, 15)*1000);
+                Console.Clear();
+            }
+            foreach (char i in "Welcome adventurer, you have been issued a very special quest by the guild!  \nYou are supposed to search the NAME for the extremly uniqe item \"ITEM\", whitch is most likely guarded my some kind of beast!")
+            {
+                Console.Write(i);
+                Thread.Sleep(10);
+            }
+            Console.ReadKey();
+            Console.Clear();
+            foreach (char i in "You have also heard that this is a weird doungeon that eats explorers, because of this the elders gifted you a needle")
+            {
+                Console.Write(i);
+                Thread.Sleep(10);
+            }
+            Console.ReadKey();
+            Console.Clear();
+            foreach (char i in "As you approch the cavern in witch the dongeon is located you see that there are signs that say \"K?e?? ?ut\" and \"?av??yo?se??s!!\"       \nYou obviusly ignore them and enter the first chamber.")
+            {
+                Console.Write(i);
+                Thread.Sleep(10);
+            }
+            Console.ReadKey();
             while (hp > 0)
             {
                 Console.Clear();
