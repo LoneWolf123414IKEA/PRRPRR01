@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel;
+
 namespace tba
 {
     class program
@@ -69,6 +71,7 @@ namespace tba
         }
         static void Main(string[] args)
         {
+            int?[,] map = new int?[260, 260];
             string[] items =
             {
                 "wooden sword",
@@ -98,19 +101,41 @@ namespace tba
             float hp = 125;
             float res = 0.05F;
             int dmg = 5;
-            float ehp = 100;
-            float eres = 100;
-            int edmg = 100;
+            float ehp = 0;
+            float eres = 0;
+            int edmg = 0;
             float tempdmg;
             float etempdmg;
             string opt;
             int temp;
             var templist = new List<float>();
-            string name = "knight";
+            string name = "";
             int xp = 0;
             int next = 1000;
             int kills = 0;
             int bsslvl = 0;
+            bool win = true;
+
+            map[0, 0] = 1;
+            map[255, 1] = -1;
+            map[20, 34] = -2;
+            map[200, 43] = -3;
+            map[32, 150] = -4;
+            map[2, 21] = -5;
+
+
+            for (int y1 = 0; y1 < 260; y1++)
+            {
+                for (int x1 = 0; x1 < 260; x1++)
+                {
+                    if (map[y1, x1] == null)
+                    {
+                        map[x1, y1] = rand.Next(0, 4);
+                    }
+                }
+            }
+            int y = 0;
+            int x = 0;
             for (int i = 0; i < 15; i++)
             {
                 Console.WriteLine("______________________________________________");
@@ -164,12 +189,12 @@ namespace tba
                 Thread.Sleep(10);
             }
             Console.ReadKey();
-            while (hp > 0)
+            while (hp > 0 && win)
             {
                 Console.Clear();
-                Console.WriteLine("do you want too \"loot\", see your \"stats\", or \"kick door\"");
+                Console.WriteLine("do you want too \"loot\", see your \"stats\", or go \"north\", \"west\", \"south\", \"east\"");
                 opt = Console.ReadLine();
-                if (opt == "loot")
+                if (opt == "loot" && map[y, x] == 1)
                 {
                     temp = rand.Next(0, 100);
                     if (xp > next)
@@ -230,6 +255,7 @@ namespace tba
                         Console.WriteLine("you found nothing");
                         Console.ReadKey();
                     }
+                    map[y, x] = 0;
                 }
                 else if (opt == "stats")
                 {
@@ -242,54 +268,80 @@ namespace tba
                     }
                     Console.ReadKey();
                 }
-                temp = rand.Next(0, 1000);
-                if (xp > next)
+                else if (opt == "north")
                 {
-                    next += 1000;
-                    switch (bsslvl)
+                    if (x != 0)
                     {
-                        case 0:
-                            name = "Judge";
-                            ehp = 1260;
-                            eres = 1.5F;
-                            edmg = 20;
-                            res -= 0.1F;
-                            break;
-                        case 1:
-                            name = "Jurry";
-                            ehp = 5000;
-                            eres = 0.2F;
-                            edmg = 100;
-                            break;
-                        case 2:
-                            name = "exocutioner";
-                            ehp = 10000;
-                            eres = 10;
-                            edmg = 60;
-                            hp *= 0.8F;
-                            break;
-                        default:
-                            name = "err";
-                            ehp = 1073741824;
-                            eres = 1073741824;
-                            edmg = 1073741824;
-                            break;
+                        x++;
                     }
-                    bsslvl++;
+                    else
+                    {
+                        Console.WriteLine("there is no door? Weird\nYou bump your head and hurt yourself");
+                        hp--;
+                    }
+                    if (map[y, x] == -1)
+                    {
+                        win = false;
+                    }
+                    else if (map[y, x] == -3 && map[20, 34] == -2)
+                    {
+                        Console.WriteLine("The door dosen't open, apperantly the Judge has the key");
+                    }
+                    else if (map[y, x] == -4 && map[200, 43] == -3)
+                    {
+                        Console.WriteLine("The door dosen't open, apperantly the Jurry has the key");
+                    }
+                    else if (map[y, x] == -5 && map[32, 150] == -4)
+                    {
+                        Console.WriteLine("The door dosen't open, apperantly the Exocutioner has the key");
+                    }
+                    else 
+                    {
+                        Console.WriteLine("This door seems uniqe");
+                    }
                 }
-                else if (temp < 757)
+                switch (map[y, x])
                 {
-                    name = "skeleton";
-                    ehp = rand.Next(10, 21);
-                    eres = rand.Next(5, 14) / 100;
-                    edmg = rand.Next(5, 11);
-                }
-                else if (temp < 1000)
-                {
-                    name = "knight";
-                    ehp = rand.Next(23, 31);
-                    eres = rand.Next(95, 100) / 100;
-                    edmg = rand.Next(15, 20);
+                    case -2:
+                        name = "Judge";
+                        ehp = 1260;
+                        eres = 1.5F;
+                        edmg = 20;
+                        res -= 0.1F;
+                        break;
+                    case -3:
+                        name = "Jurry";
+                        ehp = 5000;
+                        eres = 0.2F;
+                        edmg = 100;
+                        break;
+                    case -4:
+                        name = "exocutioner";
+                        ehp = 10000;
+                        eres = 10;
+                        edmg = 60;
+                        hp *= 0.8F;
+                        break;
+                    case -5:
+                        name = "err";
+                        ehp = 1073741824;
+                        eres = 1073741824;
+                        edmg = 1073741824;
+                        break;
+                    case 2:
+                        name = "skeleton";
+                        ehp = rand.Next(10, 21);
+                        eres = rand.Next(5, 14) / 100;
+                        edmg = rand.Next(5, 11);
+                        break;
+                    case 3:
+                        name = "knight";
+                        ehp = rand.Next(23, 31);
+                        eres = rand.Next(95, 100) / 100;
+                        edmg = rand.Next(15, 20);
+                        break;
+                   default:
+                        break;
                 }
                 while (ehp > 0 && hp > 0)
                 {
@@ -400,7 +452,7 @@ namespace tba
             Console.WriteLine("  /           \       /      \       /         |            \       /      \       /           )  ");
             Console.WriteLine(" /             \     /        \     /          |             \     /        \     /     \     /   ");
             Console.WriteLine("/               -----          -----           ---------      -----          -----       -----    ");*/
-           
+
             Console.WriteLine($"player:\nHp: {hp}\nResistance: {res * 100}%\nbase damage: {dmg}-{dmg + 5}\nLvL: {xp / 1000 + 1} Xp: {xp}\nKills: {kills}\nInventory size: {maxinv + 1}\n\n");
             Console.WriteLine("inventory:");
             for (int i = 0; i < inv.Count(); i++)
