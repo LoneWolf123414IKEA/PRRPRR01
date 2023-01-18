@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Threading;
 
 namespace tba
 {
@@ -69,6 +70,23 @@ namespace tba
             }
             return list;
         }
+        public static void PrintLine(string text)
+        {
+            foreach (char i in text)
+            {
+                Console.Write(i);
+                Thread.Sleep(10);
+            }
+            Console.Write("\n");
+        }
+        public static void Print(string text)
+        {
+            foreach (char i in text)
+            {
+                Console.Write(i);
+                Thread.Sleep(10);
+            }
+        }
         static void Main(string[] args)
         {
             int?[,] map = new int?[260, 260];
@@ -114,7 +132,7 @@ namespace tba
             int next = 1000;
             int kills = 0;
             int bsslvl = 0;
-            bool win = true;
+            bool win = false;
 
             map[0, 0] = 1;
             map[255, 1] = -1;
@@ -169,30 +187,20 @@ namespace tba
                 Thread.Sleep(rand.Next(1, 15) /* 1000*/);
                 Console.Clear();
             }
-            foreach (char i in "Welcome adventurer, you have been issued a very special quest by the guild!  \nYou are supposed to search the NAME for the extremly uniqe item \"ITEM\", whitch is most likely guarded my some kind of beast!")
-            {
-                Console.Write(i);
-                Thread.Sleep(10);
-            }
+            program.PrintLine("Welcome adventurer, you have been issued a very special quest by the guild!  \nYou are supposed to search the NAME for the extremly uniqe item \"ITEM\", whitch is most likely guarded my some kind of beast!");
             Console.ReadKey();
             Console.Clear();
-            foreach (char i in "You have also heard that this is a weird doungeon that eats explorers, because of this the elders gifted you a needle")
-            {
-                Console.Write(i);
-                Thread.Sleep(10);
-            }
+            program.PrintLine("You have also heard that this is a weird doungeon that eats explorers, because of this the elders gifted you a needle") ;
             Console.ReadKey();
             Console.Clear();
-            foreach (char i in "As you approch the cavern in witch the dongeon is located you see that there are signs that say \"K?e?? ?ut\" and \"?av??yo?se??s!!\"       \nYou obviusly ignore them and enter the first chamber.")
-            {
-                Console.Write(i);
-                Thread.Sleep(10);
-            }
+            program.PrintLine("As you approch the cavern in witch the dongeon is located you see that there are signs that say \"K?e?? ?ut\" and \"?av??yo?se??s!!\"       \nYou obviusly ignore them and enter the first chamber.") ;
             Console.ReadKey();
             while (hp > 0 && win)
             {
                 Console.Clear();
-                Console.WriteLine("do you want too \"loot\", see your \"stats\", or go \"north\", \"west\", \"south\", \"east\"");
+                program.Print("do you want to go \"north\", \"west\", \"south\", \"east\"");
+                if (map[y, x] == 1) program.PrintLine(", \"loot\", or see your \"stats\"");
+                else program.PrintLine(", or see your \"stats\"");
                 opt = Console.ReadLine();
                 if (opt == "loot" && map[y, x] == 1)
                 {
@@ -200,13 +208,13 @@ namespace tba
                     if (xp > next)
                     {
                         maxinv++;
-                        Console.WriteLine("you found a small backpack!");
+                        program.PrintLine("you found a small backpack!");
                         next += 1000;
                     }
                     else if (temp < 40 && inv.Count() <= maxinv)
                     {
                         temp = rand.Next(items.Length);
-                        Console.WriteLine("do you want " + items[temp] + "?");
+                        program.PrintLine("do you want " + items[temp] + "?");
                         if (Console.ReadLine() == "yes" && temp != 2)
                         {
                             inv.Add(temp);
@@ -219,7 +227,7 @@ namespace tba
                     else if (temp < 40 && inv.Count() > maxinv)
                     {
                         temp = rand.Next(items.Length);
-                        Console.WriteLine("do you want " + items[temp] + "?");
+                        program.PrintLine("do you want " + items[temp] + "?");
                         if (Console.ReadLine() == "yes" && temp != 2)
                         {
                             for (int i = 0; i < inv.Count(); i++)
@@ -272,33 +280,149 @@ namespace tba
                 {
                     if (x != 0)
                     {
-                        x++;
+                        x--;
+                        program.PrintLine("the door opens!");
                     }
                     else
                     {
                         Console.WriteLine("there is no door? Weird\nYou bump your head and hurt yourself");
                         hp--;
                     }
-                    if (map[y, x] == -1)
+                    if (map[y, x] == -1 && map[2, 21] != -5)
                     {
                         win = false;
+                    }
+                    else if (map[y, x] == -1 && map[2, 21] == -5)
+                    {
+                        program.PrintLine("it seems that there is a massive lift in here             \nit is not functional, apperantly there is a glitch somewhere?");
                     }
                     else if (map[y, x] == -3 && map[20, 34] == -2)
                     {
                         Console.WriteLine("The door dosen't open, apperantly the Judge has the key");
+                        x++;
                     }
                     else if (map[y, x] == -4 && map[200, 43] == -3)
                     {
                         Console.WriteLine("The door dosen't open, apperantly the Jurry has the key");
+                        x++;
                     }
                     else if (map[y, x] == -5 && map[32, 150] == -4)
                     {
                         Console.WriteLine("The door dosen't open, apperantly the Exocutioner has the key");
+                        x++;
                     }
-                    else 
+                    Console.ReadLine();
+                }
+                else if (opt == "east")
+                {
+                    if (y != 255)
                     {
-                        Console.WriteLine("This door seems uniqe");
+                        y++;
+                        program.PrintLine("the door opens!");
                     }
+                    else
+                    {
+                        Console.WriteLine("there is no door? Weird\nYou bump your head and hurt yourself");
+                        hp--;
+                    }
+                    if (map[y, x] == -1 && map[2, 21] != -5)
+                    {
+                        win = false;
+                    }
+                    else if (map[y, x] == -1 && map[2, 21] == -5)
+                    {
+                        program.PrintLine("it seems that there is a massive lift in here             \nit is not functional, apperantly there is a glitch somewhere?");
+                    }
+                    else if (map[y, x] == -3 && map[20, 34] == -2)
+                    {
+                        Console.WriteLine("The door dosen't open, apperantly the Judge has the key");
+                        y--;
+                    }
+                    else if (map[y, x] == -4 && map[200, 43] == -3)
+                    {
+                        Console.WriteLine("The door dosen't open, apperantly the Jurry has the key");
+                        y--;
+                    }
+                    else if (map[y, x] == -5 && map[32, 150] == -4)
+                    {
+                        Console.WriteLine("The door dosen't open, apperantly the Exocutioner has the key");
+                        y--;
+                    }
+                    Console.ReadLine();
+                }
+                else if (opt == "south")
+                {
+                    if (x != 255)
+                    {
+                        x++;
+                        program.PrintLine("the door opens!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("there is no door? Weird\nYou bump your head and hurt yourself");
+                        hp--;
+                    }
+                    if (map[y, x] == -1 && map[2, 21] != -5)
+                    {
+                        win = false;
+                    }
+                    else if (map[y, x] == -1 && map[2, 21] == -5)
+                    {
+                        program.PrintLine("it seems that there is a massive lift in here             \nit is not functional, apperantly there is a glitch somewhere?");
+                    }
+                    else if (map[y, x] == -3 && map[20, 34] == -2)
+                    {
+                        Console.WriteLine("The door dosen't open, apperantly the Judge has the key");
+                        x--;
+                    }
+                    else if (map[y, x] == -4 && map[200, 43] == -3)
+                    {
+                        Console.WriteLine("The door dosen't open, apperantly the Jurry has the key");
+                        x--;
+                    }
+                    else if (map[y, x] == -5 && map[32, 150] == -4)
+                    {
+                        Console.WriteLine("The door dosen't open, apperantly the Exocutioner has the key");
+                        x--;
+                    }
+                    Console.ReadLine();
+                }
+                else if (opt == "west")
+                {
+                    if (y != 0)
+                    {
+                        y--;
+                        program.PrintLine("the door opens!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("there is no door? Weird\nYou bump your head and hurt yourself");
+                        hp--;
+                    }
+                    if (map[y, x] == -1 && map[2, 21] != -5)
+                    {
+                        win = false;
+                    }
+                    else if (map[y, x] == -1 && map[2, 21] == -5)
+                    {
+                        program.PrintLine("it seems that there is a massive lift in here             \nit is not functional, apperantly there is a glitch somewhere?");
+                    }
+                    else if (map[y, x] == -3 && map[20, 34] == -2)
+                    {
+                        Console.WriteLine("The door dosen't open, apperantly the Judge has the key");
+                        x++;
+                    }
+                    else if (map[y, x] == -4 && map[200, 43] == -3)
+                    {
+                        Console.WriteLine("The door dosen't open, apperantly the Jurry has the key");
+                        x++;
+                    }
+                    else if (map[y, x] == -5 && map[32, 150] == -4)
+                    {
+                        Console.WriteLine("The door dosen't open, apperantly the Exocutioner has the key");
+                        x++;
+                    }
+                    Console.ReadLine();
                 }
                 switch (map[y, x])
                 {
@@ -340,7 +464,7 @@ namespace tba
                         eres = rand.Next(95, 100) / 100;
                         edmg = rand.Next(15, 20);
                         break;
-                   default:
+                    default:
                         break;
                 }
                 while (ehp > 0 && hp > 0)
@@ -438,20 +562,47 @@ namespace tba
                     {
                         xp += rand.Next(10);
                         kills++;
+                        map[y, x] = 1;
                     }
                 }
             }
             Console.Clear();
-            /*Console.WriteLine("\        /      _____      |           |       |              _____          _____        _____   _________");
-            Console.WriteLine(" \      /      /     \     |           |       |             /     \        /     \      /     \  |");
-            Console.WriteLine("  \    /      /       \    |           |       |            /       \      /       \    (         |");
-            Console.WriteLine("   \  /      /         \   |           |       |           /         \    /         \    \        |");
-            Console.WriteLine("    \/      (           )  |           |       |          (           )  (           )    \.      ");
-            Console.WriteLine("    /       (           )  (           )       |          (           )  (           )      \.    ");
-            Console.WriteLine("   /         \         /    \         /        |           \         /    \         /         \   ");
-            Console.WriteLine("  /           \       /      \       /         |            \       /      \       /           )  ");
-            Console.WriteLine(" /             \     /        \     /          |             \     /        \     /     \     /   ");
-            Console.WriteLine("/               -----          -----           ---------      -----          -----       -----    ");*/
+            Console.WriteLine("\\        /      _____      |           |       |              _____          _____        _____   _________");
+            Console.WriteLine(" \\      /      /     \\     |           |       |             /     \\        /     \\      /     \\  |        ");
+            Console.WriteLine("  \\    /      /       \\    |           |       |            /       \\      /       \\    (         |        ");
+            Console.WriteLine("   \\  /      /         \\   |           |       |           /         \\    /         \\    \\        |        ");
+            Console.WriteLine("    \\/      (           )  |           |       |          (           )  (           )    \\.      L_____   ");
+            Console.WriteLine("    /       (           )  (           )       |          (           )  (           )      \\.    |        ");
+            Console.WriteLine("   /         \\         /    \\         /        |           \\         /    \\         /         \\   |        ");
+            Console.WriteLine("  /           \\       /      \\       /         |            \\       /      \\       /           )  |        ");
+            Console.WriteLine(" /             \\     /        \\     /          |             \\     /        \\     /     \\     /   |        ");
+            Console.WriteLine("/               -----          -----           ---------      -----          -----       -----    L________");
+            Thread.Sleep(3000);
+            if (!win)
+            {
+                Console.Clear();
+                program.Print("Oh wait!      \nthat's the wrong screen! Let me see if i can fix this");
+                Thread.Sleep(1000);
+                Console.Write(".");
+                Thread.Sleep(1000);
+                Console.Write(".");
+                Thread.Sleep(1000);
+                Console.WriteLine(".");
+                program.PrintLine("here we go!");
+                Console.WriteLine("\\        /      _____      |           |       |              _____          _____        _____   _________");
+                Console.WriteLine(" \\      /      /     \\     |           |       |             /     \\        /     \\      /     \\  |        ");
+                Console.WriteLine("  \\    /      /       \\    |           |       |            /       \\      /       \\    (         |        ");
+                Console.WriteLine("   \\  /      /         \\   |           |       |           /         \\    /         \\    \\        |        ");
+                Console.WriteLine("    \\/      (           )  |           |       |          (           )  (           )    \\.      L_____   ");
+                Console.WriteLine("    /       (           )  (           )       |          (           )  (           )      \\.    |        ");
+                Console.WriteLine("   /         \\         /    \\         /        |           \\         /    \\         /         \\   |        ");
+                Console.WriteLine("  /           \\       /      \\       /         |            \\       /      \\       /           )  |        ");
+                Console.WriteLine(" /             \\     /        \\     /          |             \\     /        \\     /     \\     /   |        ");
+                Console.WriteLine("/               -----          -----           ---------      -----          -----       -----    L________");
+                Thread.Sleep(3000);
+                Console.Clear();
+                program.PrintLine("Darn, it seems i lost the screen,     \nanyhow, congrats! I wase'nt expecting you to make it Adventurer, I guess something something the guild punishes you for not getting the item?   \nHere are your stats:");
+            }
 
             Console.WriteLine($"player:\nHp: {hp}\nResistance: {res * 100}%\nbase damage: {dmg}-{dmg + 5}\nLvL: {xp / 1000 + 1} Xp: {xp}\nKills: {kills}\nInventory size: {maxinv + 1}\n\n");
             Console.WriteLine("inventory:");
