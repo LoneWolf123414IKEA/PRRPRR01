@@ -1,7 +1,4 @@
 using System;
-using System.ComponentModel;
-using System.Threading;
-
 namespace tba
 {
     class program
@@ -154,6 +151,8 @@ namespace tba
             }
             int y = 0;
             int x = 0;
+            int lastx = 0;
+            int lasty = 0;
             for (int i = 0; i < 15; i++)
             {
                 Console.WriteLine("______________________________________________");
@@ -193,14 +192,15 @@ namespace tba
             program.PrintLine("You have also heard that this is a weird doungeon that eats explorers, because of this the elders gifted you a needle") ;
             Console.ReadKey();
             Console.Clear();
-            program.PrintLine("As you approch the cavern in witch the dongeon is located you see that there are signs that say \"K?e?? ?ut\" and \"?av??yo?se??s!!\"       \nYou obviusly ignore them and enter the first chamber.") ;
+            program.PrintLine("As you approch the cavern in witch the dungeon is located you see that there are signs that say \"K?e?? ?ut\" and \"?av??yo?se??s!!\"       \nYou obviusly ignore them and enter the first chamber.") ;
             Console.ReadKey();
             while (hp > 0 && win)
             {
                 Console.Clear();
-                program.Print("do you want to go \"north\", \"west\", \"south\", \"east\"");
-                if (map[y, x] == 1) program.PrintLine(", \"loot\", or see your \"stats\"");
-                else program.PrintLine(", or see your \"stats\"");
+                program.Print("do you want to see your \"stats\"");
+                if (map[y, x] == 1) program.Print(", \"loot\" the room");
+                if (map[y, x] <= 1 && map[y, x] => -1) program.Print(", or go \"north\", \"west\", \"south\", or \"east\"");
+                Console.WriteLine("?");
                 opt = Console.ReadLine();
                 if (opt == "loot" && map[y, x] == 1)
                 {
@@ -232,9 +232,9 @@ namespace tba
                         {
                             for (int i = 0; i < inv.Count(); i++)
                             {
-                                Console.WriteLine((i + 1) + " " + items[inv[i]]);
+                                program.PrintLine((i + 1) + " " + items[inv[i]]);
                             }
-                            Console.WriteLine("\nchoose item to discard");
+                            program.PrintLine("\nchoose item to discard");
                             try
                             {
                                 inv.RemoveAt(int.Parse(Console.ReadLine()) - 1);
@@ -255,12 +255,12 @@ namespace tba
                     else if (temp < 52)
                     {
                         res += rand.Next(0, xp) / 100;
-                        Console.WriteLine("You found some armour");
+                        program.PrintLine("You found some armour");
                         Console.ReadKey();
                     }
                     else
                     {
-                        Console.WriteLine("you found nothing");
+                        program.PrintLine("you found nothing");
                         Console.ReadKey();
                     }
                     map[y, x] = 0;
@@ -268,11 +268,11 @@ namespace tba
                 else if (opt == "stats")
                 {
                     Console.Clear();
-                    Console.WriteLine($"player:\nHp: {hp}\nResistance: {res * 100}%\nbase damage: {dmg}-{dmg + 5}\nLvL: {xp / 1000 + 1} Xp: {xp}\nKills: {kills}\nInventory size: {maxinv + 1}\n\n");
-                    Console.WriteLine("inventory:");
+                    program.PrintLine($"player:\nHp: {hp}\nResistance: {res * 100}%\nbase damage: {dmg}-{dmg + 5}\nLvL: {xp / 1000 + 1} Xp: {xp}\nKills: {kills}\nInventory size: {maxinv + 1}\n\n");
+                    program.PrintLine("inventory:");
                     for (int i = 0; i < inv.Count(); i++)
                     {
-                        Console.WriteLine((i) + " " + items[inv[i]]);
+                        program.PrintLine((i) + " " + items[inv[i]]);
                     }
                     Console.ReadKey();
                 }
@@ -281,11 +281,12 @@ namespace tba
                     if (x != 0)
                     {
                         x--;
-                        program.PrintLine("the door opens!");
+                        
+                        program.PrintLine("you try the door");
                     }
                     else
                     {
-                        Console.WriteLine("there is no door? Weird\nYou bump your head and hurt yourself");
+                        program.PrintLine("there is no door? Weird\nYou bump your head and hurt yourself");
                         hp--;
                     }
                     if (map[y, x] == -1 && map[2, 21] != -5)
@@ -295,22 +296,25 @@ namespace tba
                     else if (map[y, x] == -1 && map[2, 21] == -5)
                     {
                         program.PrintLine("it seems that there is a massive lift in here             \nit is not functional, apperantly there is a glitch somewhere?");
+                        lastx = x++;
                     }
                     else if (map[y, x] == -3 && map[20, 34] == -2)
                     {
-                        Console.WriteLine("The door dosen't open, apperantly the Judge has the key");
+                        program.PrintLine("The door dosen't open, apperantly the Judge has the key");
                         x++;
+                        
                     }
                     else if (map[y, x] == -4 && map[200, 43] == -3)
                     {
-                        Console.WriteLine("The door dosen't open, apperantly the Jurry has the key");
+                        program.PrintLine("The door dosen't open, apperantly the Jurry has the key");
                         x++;
                     }
                     else if (map[y, x] == -5 && map[32, 150] == -4)
                     {
-                        Console.WriteLine("The door dosen't open, apperantly the Exocutioner has the key");
+                        program.PrintLine("The door dosen't open, apperantly the Exocutioner has the key");
                         x++;
                     }
+                    else lastx = x++;
                     Console.ReadLine();
                 }
                 else if (opt == "east")
@@ -318,11 +322,11 @@ namespace tba
                     if (y != 255)
                     {
                         y++;
-                        program.PrintLine("the door opens!");
+                        program.PrintLine("You try the door");
                     }
                     else
                     {
-                        Console.WriteLine("there is no door? Weird\nYou bump your head and hurt yourself");
+                        program.PrintLine("there is no door? Weird\nYou bump your head and hurt yourself");
                         hp--;
                     }
                     if (map[y, x] == -1 && map[2, 21] != -5)
@@ -332,22 +336,24 @@ namespace tba
                     else if (map[y, x] == -1 && map[2, 21] == -5)
                     {
                         program.PrintLine("it seems that there is a massive lift in here             \nit is not functional, apperantly there is a glitch somewhere?");
+                        lasty = y--;
                     }
                     else if (map[y, x] == -3 && map[20, 34] == -2)
                     {
-                        Console.WriteLine("The door dosen't open, apperantly the Judge has the key");
+                        program.PrintLine("The door dosen't open, apperantly the Judge has the key");
                         y--;
                     }
                     else if (map[y, x] == -4 && map[200, 43] == -3)
                     {
-                        Console.WriteLine("The door dosen't open, apperantly the Jurry has the key");
+                        program.PrintLine("The door dosen't open, apperantly the Jurry has the key");
                         y--;
                     }
                     else if (map[y, x] == -5 && map[32, 150] == -4)
                     {
-                        Console.WriteLine("The door dosen't open, apperantly the Exocutioner has the key");
+                        program.PrintLine("The door dosen't open, apperantly the Exocutioner has the key");
                         y--;
                     }
+                    else lasty = y--;
                     Console.ReadLine();
                 }
                 else if (opt == "south")
@@ -355,11 +361,11 @@ namespace tba
                     if (x != 255)
                     {
                         x++;
-                        program.PrintLine("the door opens!");
+                        program.PrintLine("You try the door");
                     }
                     else
                     {
-                        Console.WriteLine("there is no door? Weird\nYou bump your head and hurt yourself");
+                        program.PrintLine("there is no door? Weird\nYou bump your head and hurt yourself");
                         hp--;
                     }
                     if (map[y, x] == -1 && map[2, 21] != -5)
@@ -369,22 +375,24 @@ namespace tba
                     else if (map[y, x] == -1 && map[2, 21] == -5)
                     {
                         program.PrintLine("it seems that there is a massive lift in here             \nit is not functional, apperantly there is a glitch somewhere?");
+                        lastx = x--;
                     }
                     else if (map[y, x] == -3 && map[20, 34] == -2)
                     {
-                        Console.WriteLine("The door dosen't open, apperantly the Judge has the key");
+                        program.PrintLine("The door dosen't open, apperantly the Judge has the key");
                         x--;
                     }
                     else if (map[y, x] == -4 && map[200, 43] == -3)
                     {
-                        Console.WriteLine("The door dosen't open, apperantly the Jurry has the key");
+                        program.PrintLine("The door dosen't open, apperantly the Jurry has the key");
                         x--;
                     }
                     else if (map[y, x] == -5 && map[32, 150] == -4)
                     {
-                        Console.WriteLine("The door dosen't open, apperantly the Exocutioner has the key");
+                        program.PrintLine("The door dosen't open, apperantly the Exocutioner has the key");
                         x--;
                     }
+                    else lastx = x--;
                     Console.ReadLine();
                 }
                 else if (opt == "west")
@@ -392,11 +400,11 @@ namespace tba
                     if (y != 0)
                     {
                         y--;
-                        program.PrintLine("the door opens!");
+                        program.PrintLine("You try the door");
                     }
                     else
                     {
-                        Console.WriteLine("there is no door? Weird\nYou bump your head and hurt yourself");
+                        program.PrintLine("there is no door? Weird\nYou bump your head and hurt yourself");
                         hp--;
                     }
                     if (map[y, x] == -1 && map[2, 21] != -5)
@@ -406,22 +414,24 @@ namespace tba
                     else if (map[y, x] == -1 && map[2, 21] == -5)
                     {
                         program.PrintLine("it seems that there is a massive lift in here             \nit is not functional, apperantly there is a glitch somewhere?");
+                        lasty = y++;
                     }
                     else if (map[y, x] == -3 && map[20, 34] == -2)
                     {
-                        Console.WriteLine("The door dosen't open, apperantly the Judge has the key");
-                        x++;
+                        program.PrintLine("The door dosen't open, apperantly the Judge has the key");
+                        y++;
                     }
                     else if (map[y, x] == -4 && map[200, 43] == -3)
                     {
-                        Console.WriteLine("The door dosen't open, apperantly the Jurry has the key");
-                        x++;
+                        program.PrintLine("The door dosen't open, apperantly the Jurry has the key");
+                        y++;
                     }
                     else if (map[y, x] == -5 && map[32, 150] == -4)
                     {
-                        Console.WriteLine("The door dosen't open, apperantly the Exocutioner has the key");
-                        x++;
+                        program.PrintLine("The door dosen't open, apperantly the Exocutioner has the key");
+                        y++;
                     }
+                    else lasty = y++;
                     Console.ReadLine();
                 }
                 switch (map[y, x])
@@ -470,8 +480,12 @@ namespace tba
                 while (ehp > 0 && hp > 0)
                 {
                     Console.Clear();
-                    Console.WriteLine($"{name}:\nHp: {ehp}\nRes: {eres}\nDmg: {edmg}-{edmg + 5}\n\nPlayer:\nHp: {hp}\nRes: {res}\nDmg: {dmg}-{dmg + 5}\n");
-                    Console.WriteLine("1. attack 2. item 3. run");
+                    program.PrintLine($"{name}:\nHp: {ehp}\nRes: {eres}\nDmg: {edmg}-{edmg + 5}\n\nPlayer:\nHp: {hp}\nRes: {res}\nDmg: {dmg}-{dmg + 5}\n");
+                    Console.Write("1. attack");
+                    Thread.Sleep(200);
+                    Console.Write(" 2. item");
+                    Thread.Sleep(200);
+                    Console.Writeline(" 3. run");
                     opt = Console.ReadLine();
                     tempdmg = 0;
                     Console.Clear();
@@ -486,14 +500,14 @@ namespace tba
                             else
                             {
                                 tempdmg = rand.Next(dmg, dmg + 5) * (1 - eres);
-                                Console.WriteLine("Enemy resisted");
+                                program.PrintLine("Enemy resisted");
                             }
                             break;
                         case "2":
-                            Console.WriteLine("choose item");
+                            program.PrintLine("choose item");
                             for (int i = 0; i < inv.Count(); i++)
                             {
-                                Console.WriteLine((i) + " " + items[inv[i]]);
+                                program.PrintLine((i) + " " + items[inv[i]]);
                             }
                             try
                             {
@@ -502,7 +516,7 @@ namespace tba
                             }
                             catch
                             {
-                                Console.WriteLine("out of range, defaulting to standard weapon");
+                                program.PrintLine("out of range, defaulting to standard weapon");
                                 templist = new List<float> { 0, 0 };
                                 temp = 0;
                             }
@@ -539,7 +553,10 @@ namespace tba
                             templist.Clear();
                             break;
                         case "3":
-                            res -= 0.5F;
+                            res -= 0.1F;
+                            X = lastx;
+                            y = lasty;
+                            program.PrintLine("You ran away but the enemy destroyed some of your armour");
                             break;
                         default:
                             break;
@@ -551,10 +568,10 @@ namespace tba
                     else
                     {
                         etempdmg = rand.Next(edmg, edmg + 5) * (1 - res);
-                        Console.WriteLine("You resisted");
+                        program.PrintLine("You resisted");
                         res -= 0.01F;
                     }
-                    Console.WriteLine($"You did {tempdmg} damage\nYou lost {etempdmg} health");
+                    program.PrintLine($"You did {tempdmg} damage\nYou lost {etempdmg} health");
                     hp -= etempdmg;
                     ehp -= tempdmg;
                     Console.ReadKey();
