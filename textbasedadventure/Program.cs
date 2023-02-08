@@ -114,7 +114,6 @@ namespace tba
                 "small heal"
             };
             List<int> inv = new List<int>();
-            inv.Add(2);
             int maxinv;
             Random rand = new Random();
             float hp;
@@ -133,19 +132,20 @@ namespace tba
             Print("I herby declare that i ");
             string plname = Console.ReadLine();
             Console.SetCursorPosition(23 + plname.Length, 0);
-            PrintLn(" will serve the guild for all eternety and folow any orders by the elders, even if it may result in my demise");
+            PrintLn(" will serve the eternal guild with my soul untill i am released, i also am aware that if i shuld fall during the completion of a quest my mind and soul will be retured to the time and place i was issued that quest.");
             Console.Read();
             int xp;
             int next;
             int kills = 0;
             bool win;
 
-            while (true) 
+            while (true)
             {
 
                 xp = 0;
                 next = 1000;
                 inv.Clear();
+                inv.Add(2);
                 win = true;
                 maxinv = 2;
                 hp = 125;
@@ -177,7 +177,7 @@ namespace tba
                 x = 0;
                 lastx = 0;
                 lasty = 0;
-
+                /*
 
                 for (int i = 0; i < 15; i++)
                 {
@@ -209,7 +209,7 @@ namespace tba
                     Console.WriteLine("|                                            |");
                     Console.WriteLine("|                                            |");
                     Console.WriteLine("----------------------------------------------");
-                    Thread.Sleep(rand.Next(1, 15) /* 1000*/);
+                    Thread.Sleep(rand.Next(1, 15) * 1000);
                     Console.Clear();
                 }
                 PrintLn("Welcome adventurer, you have been issued a very special quest by the guild!  \nYou are supposed to search the NAME for the extremly uniqe item \"ITEM\", whitch is most likely guarded my some kind of beast!");
@@ -220,7 +220,7 @@ namespace tba
                 Console.Clear();
                 PrintLn("As you approch the cavern in witch the dungeon is located you see that there are signs that say \"K?e?? ?ut\" and \"?av??yo?se??s!!\"       \nYou obviusly ignore them and enter the first chamber.");
                 Console.ReadKey();
-
+                */
 
 
 
@@ -375,246 +375,249 @@ namespace tba
                             kills++;
                             map[y, x] = 1;
                         }
-                        Console.Clear();
-                        Console.WriteLine(map[x, y]);
-                        Print("do you want to see your \"stats\"");
-                        if (map[y, x] == 1) Print(", \"loot\" the room");
-                        if (map[y, x] <= 1 && map[y, x] >= -1) Print(", or go \"north\", \"west\", \"south\", or \"east\"");
-                        Console.WriteLine("?");
-                        opt = Console.ReadLine();
-                        if (opt == "loot" && map[y, x] == 1)
-                        {
-                            temp = rand.Next(0, 100);
-                            if (xp > next)
-                            {
-                                maxinv++;
-                                PrintLn("you found a small backpack!");
-                                next += 1000;
-                            }
-                            else if (temp < 40 && inv.Count() <= maxinv)
-                            {
-                                temp = rand.Next(items.Length);
-                                PrintLn("do you want " + items[temp] + "?");
-                                if (Console.ReadLine() == "yes" && temp != 2)
-                                {
-                                    inv.Add(temp);
-                                }
-                                else
-                                {
-                                    inv.Add(3);
-                                }
-                            }
-                            else if (temp < 40 && inv.Count() > maxinv)
-                            {
-                                temp = rand.Next(items.Length);
-                                PrintLn("do you want " + items[temp] + "?");
-                                if (Console.ReadLine() == "yes" && temp != 2)
-                                {
-                                    for (int i = 0; i < inv.Count(); i++)
-                                    {
-                                        PrintLn((i + 1) + " " + items[inv[i]]);
-                                    }
-                                    PrintLn("\nchoose item to discard");
-                                    try
-                                    {
-                                        inv.RemoveAt(int.Parse(Console.ReadLine()) - 1);
-                                    }
-                                    catch
-                                    {
-                                        Console.WriteLine("out of range, removing first object");
-                                        inv.RemoveAt(0);
-                                    }
-                                    inv.Add(temp);
-                                }
-                                else
-                                {
-                                    inv.RemoveAt(0);
-                                    inv.Add(3);
-                                }
-                            }
-                            else if (temp < 52)
-                            {
-                                res += rand.Next(0, xp) / 100;
-                                PrintLn("You found some armour");
-                                Console.ReadKey();
-                            }
-                            else
-                            {
-                                PrintLn("you found nothing");
-                                Console.ReadKey();
-                            }
-                            map[y, x] = 0;
-                        }
-                        else if (opt == "stats")
-                        {
-                            Console.Clear();
-                            PrintLn($"player:\nHp: {hp}\nResistance: {res * 100}%\nbase damage: {dmg}-{dmg + 5}\nLvL: {xp / 1000 + 1} Xp: {xp}\nKills: {kills}\nInventory size: {maxinv + 1}\n\n");
-                            PrintLn("inventory:");
-                            for (int i = 0; i < inv.Count(); i++)
-                            {
-                                PrintLn((i) + " " + items[inv[i]]);
-                            }
-                            Console.ReadKey();
-                        }
-                        else if (opt == "north")
-                        {
-                            if (x != 0)
-                            {
-                                x--;
-
-                                PrintLn("you try the door");
-                            }
-                            else
-                            {
-                                PrintLn("there is no door? Weird\nYou bump your head and hurt yourself");
-                                hp--;
-                            }
-                            if (map[y, x] == -1 && map[2, 21] != -5)
-                            {
-                                win = false;
-                            }
-                            else if (map[y, x] == -1 && map[2, 21] == -5)
-                            {
-                                PrintLn("it seems that there is a massive lift in here             \nit is not functional, apperantly there is a glitch somewhere?");
-                                lastx = x++;
-                            }
-                            else if (map[y, x] == -3 && map[20, 34] == -2)
-                            {
-                                PrintLn("The door dosen't open, apperantly the Judge has the key");
-                                x++;
-
-                            }
-                            else if (map[y, x] == -4 && map[200, 43] == -3)
-                            {
-                                PrintLn("The door dosen't open, apperantly the Jurry has the key");
-                                x++;
-                            }
-                            else if (map[y, x] == -5 && map[32, 150] == -4)
-                            {
-                                PrintLn("The door dosen't open, apperantly the Exocutioner has the key");
-                                x++;
-                            }
-                            else lastx = x + 1;
-                            Console.ReadLine();
-                        }
-                        else if (opt == "east")
-                        {
-                            if (y != 255)
-                            {
-                                y++;
-                                PrintLn("You try the door");
-                            }
-                            else
-                            {
-                                PrintLn("there is no door? Weird\nYou bump your head and hurt yourself");
-                                hp--;
-                            }
-                            if (map[y, x] == -1 && map[2, 21] != -5)
-                            {
-                                win = false;
-                            }
-                            else if (map[y, x] == -1 && map[2, 21] == -5)
-                            {
-                                PrintLn("it seems that there is a massive lift in here             \nit is not functional, apperantly there is a glitch somewhere?");
-                                lasty = y--;
-                            }
-                            else if (map[y, x] == -3 && map[20, 34] == -2)
-                            {
-                                PrintLn("The door dosen't open, apperantly the Judge has the key");
-                                y--;
-                            }
-                            else if (map[y, x] == -4 && map[200, 43] == -3)
-                            {
-                                PrintLn("The door dosen't open, apperantly the Jurry has the key");
-                                y--;
-                            }
-                            else if (map[y, x] == -5 && map[32, 150] == -4)
-                            {
-                                PrintLn("The door dosen't open, apperantly the Exocutioner has the key");
-                                y--;
-                            }
-                            else lasty = y - 1;
-                            Console.ReadLine();
-                        }
-                        else if (opt == "south")
-                        {
-                            if (x != 255)
-                            {
-                                x++;
-                                PrintLn("You try the door");
-                            }
-                            else
-                            {
-                                PrintLn("there is no door? Weird\nYou bump your head and hurt yourself");
-                                hp--;
-                            }
-                            if (map[y, x] == -1 && map[2, 21] != -5)
-                            {
-                                win = false;
-                            }
-                            else if (map[y, x] == -1 && map[2, 21] == -5)
-                            {
-                                PrintLn("it seems that there is a massive lift in here             \nit is not functional, apperantly there is a glitch somewhere?");
-                                lastx = x--;
-                            }
-                            else if (map[y, x] == -3 && map[20, 34] == -2)
-                            {
-                                PrintLn("The door dosen't open, apperantly the Judge has the key");
-                                x--;
-                            }
-                            else if (map[y, x] == -4 && map[200, 43] == -3)
-                            {
-                                PrintLn("The door dosen't open, apperantly the Jurry has the key");
-                                x--;
-                            }
-                            else if (map[y, x] == -5 && map[32, 150] == -4)
-                            {
-                                PrintLn("The door dosen't open, apperantly the Exocutioner has the key");
-                                x--;
-                            }
-                            else lastx = x - 1;
-                            Console.ReadLine();
-                        }
-                        else if (opt == "west")
-                        {
-                            if (y != 0)
-                            {
-                                y--;
-                                PrintLn("You try the door");
-                            }
-                            else
-                            {
-                                PrintLn("there is no door? Weird\nYou bump your head and hurt yourself");
-                                hp--;
-                            }
-                            if (map[y, x] == -1 && map[2, 21] != -5)
-                            {
-                                win = false;
-                            }
-                            else if (map[y, x] == -1 && map[2, 21] == -5)
-                            {
-                                PrintLn("it seems that there is a massive lift in here             \nit is not functional, apperantly there is a glitch somewhere?");
-                                lasty = y++;
-                            }
-                            else if (map[y, x] == -3 && map[20, 34] == -2)
-                            {
-                                PrintLn("The door dosen't open, apperantly the Judge has the key");
-                                y++;
-                            }
-                            else if (map[y, x] == -4 && map[200, 43] == -3)
-                            {
-                                PrintLn("The door dosen't open, apperantly the Jurry has the key");
-                                y++;
-                            }
-                            else if (map[y, x] == -5 && map[32, 150] == -4)
-                            {
-                                PrintLn("The door dosen't open, apperantly the Exocutioner has the key");
-                                y++;
-                            }
-                            else lasty = y + 1;
-                            Console.ReadLine();
-                        }
                     }
+                    Console.Clear();
+                    Print("do you want to see your \"stats\"");
+                    if (map[y, x] == 1) Print(", \"loot\" the room");
+                    if (map[y, x] <= 1 && map[y, x] >= -1) Print(", or go \"north\", \"west\", \"south\", or \"east\"");
+                    Console.WriteLine("?");
+                    opt = Console.ReadLine();
+                    if (opt == "loot" && map[y, x] == 1)
+                    {
+                        temp = rand.Next(0, 100);
+                        if (xp > next)
+                        {
+                        maxinv++;
+                        PrintLn("you found a small backpack!");
+                        next += 1000;
+                        }
+                        else if (temp < 40 && inv.Count() <= maxinv)
+                        {
+                            temp = rand.Next(items.Length);
+                            PrintLn("do you want " + items[temp] + "?");
+                            opt = Console.ReadLine();
+                            if (opt == "yes" && temp != 2)
+                            {
+                            inv.Add(temp);
+                            }
+                            else if (opt == "yes")
+                            {
+                            inv.Add(3);
+                            }
+                            if (inv[0] == 2) inv.RemoveAt(0);
+                        }
+                        else if (temp < 40 && inv.Count() > maxinv)
+                            {
+                            temp = rand.Next(items.Length);
+                            PrintLn("do you want " + items[temp] + "?");
+                            opt = Console.ReadLine();
+                            if (opt == "yes" && temp != 2)
+                            {
+                                for (int i = 0; i < inv.Count(); i++)
+                                {
+                                PrintLn((i + 1) + " " + items[inv[i]]);
+                                }
+                                PrintLn("\nchoose item to discard");
+                                try
+                                {
+                                inv.RemoveAt(int.Parse(Console.ReadLine()) - 1);
+                                }
+                                catch
+                                {
+                                Console.WriteLine("out of range, removing first object");
+                                inv.RemoveAt(0);
+                                }
+                                inv.Add(temp);
+                            }
+                            else if (opt == "yes")
+                            {
+                                inv.RemoveAt(0);
+                                inv.Add(3);
+                            }
+                        }
+                        else if (temp < 52)
+                        {
+                        res += rand.Next(0, xp) / 100;
+                        PrintLn("You found some armour");
+                        Console.ReadKey();
+                        }
+                        else
+                        {
+                        PrintLn("you found nothing");
+                        Console.ReadKey();
+                        }
+                        map[y, x] = 0;
+                    }
+                    else if (opt == "stats")
+                    {
+                        Console.Clear();
+                        PrintLn($"player:\nHp: {hp}\nResistance: {res * 100}%\nbase damage: {dmg}-{dmg + 5}\nLvL: {xp / 1000 + 1} Xp: {xp}\nKills: {kills}\nInventory size: {maxinv + 1}\n\n");
+                        PrintLn("inventory:");
+                        for (int i = 0; i < inv.Count(); i++)
+                        {
+                        PrintLn((i) + " " + items[inv[i]]);
+                        }
+                        Console.ReadKey();
+                    }
+                    else if (opt == "north")
+                    {
+                        if (x != 0)
+                        {
+                        x--;
+
+                        PrintLn("you try the door");
+                        }
+                        else
+                        {
+                        PrintLn("there is no door? Weird\nYou bump your head and hurt yourself");
+                        hp--;
+                        }
+                        if (map[y, x] == -1 && map[2, 21] != -5)
+                        {
+                        win = false;
+                        }
+                        else if (map[y, x] == -1 && map[2, 21] == -5)
+                        {
+                        PrintLn("it seems that there is a massive lift in here         \nit is not functional, apperantly there is a glitch somewhere?");
+                        lastx = x++;
+                        }
+                        else if (map[y, x] == -3 && map[20, 34] == -2)
+                        {
+                        PrintLn("The door dosen't open, apperantly the Judge has the key");
+                        x++;
+
+                        }
+                        else if (map[y, x] == -4 && map[200, 43] == -3)
+                        {
+                        PrintLn("The door dosen't open, apperantly the Jurry has the key");
+                        x++;
+                        }
+                        else if (map[y, x] == -5 && map[32, 150] == -4)
+                        {
+                        PrintLn("The door dosen't open, apperantly the Exocutioner has the key");
+                        x++;
+                        }
+                        else lastx = x + 1;
+                        Console.ReadLine();
+                    }
+                    else if (opt == "east")
+                    {
+                        if (y != 255)
+                        {
+                        y++;
+                        PrintLn("You try the door");
+                        }
+                        else
+                        {
+                        PrintLn("there is no door? Weird\nYou bump your head and hurt yourself");
+                        hp--;
+                        }
+                        if (map[y, x] == -1 && map[2, 21] != -5)
+                        {
+                        win = false;
+                        }
+                        else if (map[y, x] == -1 && map[2, 21] == -5)
+                        {
+                        PrintLn("it seems that there is a massive lift in here         \nit is not functional, apperantly there is a glitch somewhere?");
+                        lasty = y--;
+                        }
+                        else if (map[y, x] == -3 && map[20, 34] == -2)
+                        {
+                        PrintLn("The door dosen't open, apperantly the Judge has the key");
+                        y--;
+                        }
+                        else if (map[y, x] == -4 && map[200, 43] == -3)
+                        {
+                        PrintLn("The door dosen't open, apperantly the Jurry has the key");
+                        y--;
+                        }
+                        else if (map[y, x] == -5 && map[32, 150] == -4)
+                        {
+                        PrintLn("The door dosen't open, apperantly the Exocutioner has the key");
+                        y--;
+                        }
+                        else lasty = y - 1;
+                        Console.ReadLine();
+                    }
+                    else if (opt == "south")
+                    {
+                        if (x != 255)
+                        {
+                        x++;
+                        PrintLn("You try the door");
+                        }
+                        else
+                        {
+                        PrintLn("there is no door? Weird\nYou bump your head and hurt yourself");
+                        hp--;
+                        }
+                        if (map[y, x] == -1 && map[2, 21] != -5)
+                        {
+                        win = false;
+                        }
+                        else if (map[y, x] == -1 && map[2, 21] == -5)
+                        {
+                        PrintLn("it seems that there is a massive lift in here         \nit is not functional, apperantly there is a glitch somewhere?");
+                        lastx = x--;
+                        }
+                        else if (map[y, x] == -3 && map[20, 34] == -2)
+                        {
+                        PrintLn("The door dosen't open, apperantly the Judge has the key");
+                        x--;
+                        }
+                        else if (map[y, x] == -4 && map[200, 43] == -3)
+                        {
+                        PrintLn("The door dosen't open, apperantly the Jurry has the key");
+                        x--;
+                        }
+                        else if (map[y, x] == -5 && map[32, 150] == -4)
+                        {
+                        PrintLn("The door dosen't open, apperantly the Exocutioner has the key");
+                        x--;
+                        }
+                        else lastx = x - 1;
+                        Console.ReadLine();
+                    }
+                    else if (opt == "west")
+                    {
+                        if (y != 0)
+                        {
+                        y--;
+                        PrintLn("You try the door");
+                        }
+                        else
+                        {
+                        PrintLn("there is no door? Weird\nYou bump your head and hurt yourself");
+                        hp--;
+                        }
+                        if (map[y, x] == -1 && map[2, 21] != -5)
+                        {
+                        win = false;
+                        }
+                        else if (map[y, x] == -1 && map[2, 21] == -5)
+                        {
+                        PrintLn("it seems that there is a massive lift in here         \nit is not functional, apperantly there is a glitch somewhere?");
+                        lasty = y++;
+                        }
+                        else if (map[y, x] == -3 && map[20, 34] == -2)
+                        {
+                        PrintLn("The door dosen't open, apperantly the Judge has the key");
+                        y++;
+                        }
+                        else if (map[y, x] == -4 && map[200, 43] == -3)
+                        {
+                        PrintLn("The door dosen't open, apperantly the Jurry has the key");
+                        y++;
+                        }
+                        else if (map[y, x] == -5 && map[32, 150] == -4)
+                        {
+                        PrintLn("The door dosen't open, apperantly the Exocutioner has the key");
+                        y++;
+                        }
+                        else lasty = y + 1;
+                        Console.ReadLine();
+                    }
+                    
                 }
                 Console.Clear();
                 Console.WriteLine("\\        /      _____      |           |       |              _____          _____        _____   _________");
