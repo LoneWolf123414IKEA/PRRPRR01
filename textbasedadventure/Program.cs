@@ -1,4 +1,5 @@
 using System;
+
 namespace tba
 {
     class program
@@ -6,11 +7,6 @@ namespace tba
         static List<float> ItemStats(int id)
         {
             var list = new List<float>();
-            /*else if (id == )
-            {
-                list.Add();
-                list.Add();
-            }*/
             switch (id)
             {
                 case 0:
@@ -86,6 +82,15 @@ namespace tba
         }
         static void Main(string[] args)
         {
+            bool sav = false;
+            Console.Write("Load a file? (y/n) ");
+            if (Console.ReadLine() == "y") sav = true;
+            Console.Clear();
+
+                
+
+
+
             int?[,] map = new int?[260, 260];
             int x;
             int y;
@@ -129,56 +134,96 @@ namespace tba
             var templist = new List<float>();
             string name = "";
             Console.SetWindowSize(160, 40);
-            Print("I herby declare that i ");
-            string plname = Console.ReadLine();
-            Console.SetCursorPosition(23 + plname.Length, 0);
-            PrintLn(" will serve the eternal guild with my soul untill i am released, i also am aware that if i shuld fall during the completion of a quest my mind and soul will be retured to the time and place i was issued that quest.");
-            Console.Read();
+            if (!sav)
+            {
+                Print("I herby declare that i ");
+                string plname = Console.ReadLine();
+                Console.SetCursorPosition(23 + plname.Length, 0);
+                PrintLn(" will serve the eternal guild with my soul untill i am released, i also am aware that if i shuld fall during the completion of a quest my mind and soul will be retured to the time and place i was issued that quest.");
+                Console.Read();
+            }
+            
             int xp;
             int next;
             int kills = 0;
             bool win;
+            bool giveup = false;
+
+
+
+
+
+
 
             while (true)
             {
-
-                xp = 0;
-                next = 1000;
-                inv.Clear();
-                inv.Add(2);
-                win = true;
-                maxinv = 2;
-                hp = 125;
-                res = 0.05F;
-                dmg = 5;
-                ehp = 0;
-
-
-
-                map[0, 0] = 1;
-                map[255, 1] = -1;
-                map[20, 34] = -2;
-                map[200, 43] = -3;
-                map[32, 150] = -4;
-                map[2, 21] = -5;
-
-
-                for (int y1 = 0; y1 < 260; y1++)
+                if (sav)
                 {
-                    for (int x1 = 0; x1 < 260; x1++)
+                    TextReader svf = new StreamReader("sav.txt");
+                    xp = int.Parse(svf.ReadLine());
+                    next = int.Parse(svf.ReadLine());
+                    for (int i = -1; i < int.Parse(svf.ReadLine()); i++) Console.WriteLine(svf.ReadLine());
+                    win = true;
+                    maxinv = int.Parse(svf.ReadLine());
+                    hp = float.Parse(svf.ReadLine());
+                    res = float.Parse(svf.ReadLine());
+                    dmg = int.Parse(svf.ReadLine());
+                    ehp = 0;
+                    for (int y1 = 0; y1 < 260; y1++)
                     {
-                        if (map[y1, x1] == null)
+                        for (int x1 = 0; x1 < 260; x1++)
                         {
-                            map[x1, y1] = rand.Next(0, 4);
+                            map[x1, y1] = int.Parse(svf.ReadLine());
                         }
                     }
-                }
-                y = 0;
-                x = 0;
-                lastx = 0;
-                lasty = 0;
-                /*
+                    y = int.Parse(svf.ReadLine());
+                    x = int.Parse(svf.ReadLine());
+                    lastx = int.Parse(svf.ReadLine());
+                    lasty = int.Parse(svf.ReadLine());
 
+                    svf.Close();
+                    sav = false;
+                }
+                else
+                {
+                    xp = 0;
+                    next = 1000;
+                    inv.Clear();
+                    inv.Add(2);
+                    win = true;
+                    maxinv = 2;
+                    hp = 125;
+                    res = 0.05F;
+                    dmg = 5;
+                    ehp = 0;
+
+
+
+                    map[0, 0] = 1;
+                    map[255, 1] = -1;
+                    map[20, 34] = -2;
+                    map[200, 43] = -3;
+                    map[32, 150] = -4;
+                    map[2, 21] = -5;
+                
+
+                    for (int y1 = 0; y1 < 260; y1++)
+                    {
+                        for (int x1 = 0; x1 < 260; x1++)
+                        {
+                            if (map[y1, x1] == null)
+                            {
+                                map[x1, y1] = rand.Next(0, 4);
+                            }
+                        }
+                    }
+                    y = 0;
+                    x = 0;
+                    lastx = 0;
+                    lasty = 0;
+                }
+                
+                /*
                 for (int i = 0; i < 15; i++)
                 {
                     Console.WriteLine("______________________________________________");
@@ -271,6 +316,7 @@ namespace tba
                         default:
                             break;
                     }
+                    Console.WriteLine(name);
                     while (ehp > 0 && hp > 0)
                     {
                         Console.Clear();
@@ -377,7 +423,14 @@ namespace tba
                         }
                     }
                     Console.Clear();
-                    Print("do you want to see your \"stats\"");
+                    PrintLn($"player:\nHp: {hp}\nResistance: {res * 100}%\nbase damage: {dmg}-{dmg + 5}\nLvL: {xp / 1000 + 1} Xp: {xp}\nKills: {kills}\nInventory size: {maxinv + 1}\n\n");
+                    PrintLn("inventory:");
+                    for (int i = 0; i < inv.Count(); i++)
+                    {
+                        PrintLn((i) + " " + items[inv[i]]);
+                    }
+                    Console.WriteLine();
+                    Print("do you want to \"save\"");
                     if (map[y, x] == 1) Print(", \"loot\" the room");
                     if (map[y, x] <= 1 && map[y, x] >= -1) Print(", or go \"north\", \"west\", \"south\", or \"east\"");
                     Console.WriteLine("?");
@@ -387,9 +440,9 @@ namespace tba
                         temp = rand.Next(0, 100);
                         if (xp > next)
                         {
-                        maxinv++;
-                        PrintLn("you found a small backpack!");
-                        next += 1000;
+                            maxinv++;
+                            PrintLn("you found a small backpack!");
+                            next += 1000;
                         }
                         else if (temp < 40 && inv.Count() <= maxinv)
                         {
@@ -398,16 +451,16 @@ namespace tba
                             opt = Console.ReadLine();
                             if (opt == "yes" && temp != 2)
                             {
-                            inv.Add(temp);
+                                inv.Add(temp);
                             }
                             else if (opt == "yes")
                             {
-                            inv.Add(3);
+                                inv.Add(3);
                             }
                             if (inv[0] == 2) inv.RemoveAt(0);
                         }
                         else if (temp < 40 && inv.Count() > maxinv)
-                            {
+                        {
                             temp = rand.Next(items.Length);
                             PrintLn("do you want " + items[temp] + "?");
                             opt = Console.ReadLine();
@@ -415,17 +468,17 @@ namespace tba
                             {
                                 for (int i = 0; i < inv.Count(); i++)
                                 {
-                                PrintLn((i + 1) + " " + items[inv[i]]);
+                                    PrintLn((i + 1) + " " + items[inv[i]]);
                                 }
                                 PrintLn("\nchoose item to discard");
                                 try
                                 {
-                                inv.RemoveAt(int.Parse(Console.ReadLine()) - 1);
+                                    inv.RemoveAt(int.Parse(Console.ReadLine()) - 1);
                                 }
                                 catch
                                 {
-                                Console.WriteLine("out of range, removing first object");
-                                inv.RemoveAt(0);
+                                    Console.WriteLine("out of range, removing first object");
+                                    inv.RemoveAt(0);
                                 }
                                 inv.Add(temp);
                             }
@@ -437,65 +490,81 @@ namespace tba
                         }
                         else if (temp < 52)
                         {
-                        res += rand.Next(0, xp) / 100;
-                        PrintLn("You found some armour");
-                        Console.ReadKey();
+                            res += rand.Next(0, xp) / 100;
+                            PrintLn("You found some armour");
+                            Console.ReadKey();
                         }
                         else
                         {
-                        PrintLn("you found nothing");
-                        Console.ReadKey();
+                            PrintLn("you found nothing");
+                            Console.ReadKey();
                         }
                         map[y, x] = 0;
                     }
-                    else if (opt == "stats")
+                    else if (opt == "save")
                     {
-                        Console.Clear();
-                        PrintLn($"player:\nHp: {hp}\nResistance: {res * 100}%\nbase damage: {dmg}-{dmg + 5}\nLvL: {xp / 1000 + 1} Xp: {xp}\nKills: {kills}\nInventory size: {maxinv + 1}\n\n");
-                        PrintLn("inventory:");
-                        for (int i = 0; i < inv.Count(); i++)
+                        TextWriter wsv = new StreamWriter("sav.txt");
+
+                        wsv.WriteLine(xp);
+                        wsv.WriteLine(next);
+                        wsv.WriteLine(inv.Count());
+                        foreach (int i in inv) wsv.WriteLine(i);
+                        wsv.WriteLine(maxinv);
+                        wsv.WriteLine(hp);
+                        wsv.WriteLine(res);
+                        wsv.WriteLine(dmg);
+                        ehp = 0;
+                        for (int y1 = 0; y1 < 260; y1++)
                         {
-                        PrintLn((i) + " " + items[inv[i]]);
+                            for (int x1 = 0; x1 < 260; x1++)
+                            {
+                                wsv.WriteLine(map[x1, y1]);
+                            }
                         }
-                        Console.ReadKey();
+                        wsv.WriteLine(y);
+                        wsv.WriteLine(x);
+                        wsv.WriteLine(lastx);
+                        wsv.WriteLine(lasty);
+
+                        wsv.Close();
                     }
                     else if (opt == "north")
                     {
                         if (x != 0)
                         {
-                        x--;
+                            x--;
 
-                        PrintLn("you try the door");
+                            PrintLn("you try the door");
                         }
                         else
                         {
-                        PrintLn("there is no door? Weird\nYou bump your head and hurt yourself");
-                        hp--;
+                            PrintLn("there is no door? Weird\nYou bump your head and hurt yourself");
+                            hp--;
                         }
                         if (map[y, x] == -1 && map[2, 21] != -5)
                         {
-                        win = false;
+                            win = false;
                         }
                         else if (map[y, x] == -1 && map[2, 21] == -5)
                         {
-                        PrintLn("it seems that there is a massive lift in here         \nit is not functional, apperantly there is a glitch somewhere?");
-                        lastx = x++;
+                            PrintLn("it seems that there is a massive lift in here         \nit is not functional, apperantly there is a glitch somewhere?");
+                            lastx = x++;
                         }
                         else if (map[y, x] == -3 && map[20, 34] == -2)
                         {
-                        PrintLn("The door dosen't open, apperantly the Judge has the key");
-                        x++;
+                            PrintLn("The door dosen't open, apperantly the Judge has the key");
+                            x++;
 
                         }
                         else if (map[y, x] == -4 && map[200, 43] == -3)
                         {
-                        PrintLn("The door dosen't open, apperantly the Jurry has the key");
-                        x++;
+                            PrintLn("The door dosen't open, apperantly the Jurry has the key");
+                            x++;
                         }
                         else if (map[y, x] == -5 && map[32, 150] == -4)
                         {
-                        PrintLn("The door dosen't open, apperantly the Exocutioner has the key");
-                        x++;
+                            PrintLn("The door dosen't open, apperantly the Exocutioner has the key");
+                            x++;
                         }
                         else lastx = x + 1;
                         Console.ReadLine();
@@ -504,37 +573,37 @@ namespace tba
                     {
                         if (y != 255)
                         {
-                        y++;
-                        PrintLn("You try the door");
+                            y++;
+                            PrintLn("You try the door");
                         }
                         else
                         {
-                        PrintLn("there is no door? Weird\nYou bump your head and hurt yourself");
-                        hp--;
+                            PrintLn("there is no door? Weird\nYou bump your head and hurt yourself");
+                            hp--;
                         }
                         if (map[y, x] == -1 && map[2, 21] != -5)
                         {
-                        win = false;
+                            win = false;
                         }
                         else if (map[y, x] == -1 && map[2, 21] == -5)
                         {
-                        PrintLn("it seems that there is a massive lift in here         \nit is not functional, apperantly there is a glitch somewhere?");
-                        lasty = y--;
+                            PrintLn("it seems that there is a massive lift in here         \nit is not functional, apperantly there is a glitch somewhere?");
+                            lasty = y--;
                         }
                         else if (map[y, x] == -3 && map[20, 34] == -2)
                         {
-                        PrintLn("The door dosen't open, apperantly the Judge has the key");
-                        y--;
+                            PrintLn("The door dosen't open, apperantly the Judge has the key");
+                            y--;
                         }
                         else if (map[y, x] == -4 && map[200, 43] == -3)
                         {
-                        PrintLn("The door dosen't open, apperantly the Jurry has the key");
-                        y--;
+                            PrintLn("The door dosen't open, apperantly the Jurry has the key");
+                            y--;
                         }
                         else if (map[y, x] == -5 && map[32, 150] == -4)
                         {
-                        PrintLn("The door dosen't open, apperantly the Exocutioner has the key");
-                        y--;
+                            PrintLn("The door dosen't open, apperantly the Exocutioner has the key");
+                            y--;
                         }
                         else lasty = y - 1;
                         Console.ReadLine();
@@ -543,37 +612,37 @@ namespace tba
                     {
                         if (x != 255)
                         {
-                        x++;
-                        PrintLn("You try the door");
+                            x++;
+                            PrintLn("You try the door");
                         }
                         else
                         {
-                        PrintLn("there is no door? Weird\nYou bump your head and hurt yourself");
-                        hp--;
+                            PrintLn("there is no door? Weird\nYou bump your head and hurt yourself");
+                            hp--;
                         }
                         if (map[y, x] == -1 && map[2, 21] != -5)
                         {
-                        win = false;
+                            win = false;
                         }
                         else if (map[y, x] == -1 && map[2, 21] == -5)
                         {
-                        PrintLn("it seems that there is a massive lift in here         \nit is not functional, apperantly there is a glitch somewhere?");
-                        lastx = x--;
+                            PrintLn("it seems that there is a massive lift in here         \nit is not functional, apperantly there is a glitch somewhere?");
+                            lastx = x--;
                         }
                         else if (map[y, x] == -3 && map[20, 34] == -2)
                         {
-                        PrintLn("The door dosen't open, apperantly the Judge has the key");
-                        x--;
+                            PrintLn("The door dosen't open, apperantly the Judge has the key");
+                            x--;
                         }
                         else if (map[y, x] == -4 && map[200, 43] == -3)
                         {
-                        PrintLn("The door dosen't open, apperantly the Jurry has the key");
-                        x--;
+                            PrintLn("The door dosen't open, apperantly the Jurry has the key");
+                            x--;
                         }
                         else if (map[y, x] == -5 && map[32, 150] == -4)
                         {
-                        PrintLn("The door dosen't open, apperantly the Exocutioner has the key");
-                        x--;
+                            PrintLn("The door dosen't open, apperantly the Exocutioner has the key");
+                            x--;
                         }
                         else lastx = x - 1;
                         Console.ReadLine();
@@ -582,42 +651,42 @@ namespace tba
                     {
                         if (y != 0)
                         {
-                        y--;
-                        PrintLn("You try the door");
+                            y--;
+                            PrintLn("You try the door");
                         }
                         else
                         {
-                        PrintLn("there is no door? Weird\nYou bump your head and hurt yourself");
-                        hp--;
+                            PrintLn("there is no door? Weird\nYou bump your head and hurt yourself");
+                            hp--;
                         }
                         if (map[y, x] == -1 && map[2, 21] != -5)
                         {
-                        win = false;
+                            win = false;
                         }
                         else if (map[y, x] == -1 && map[2, 21] == -5)
                         {
-                        PrintLn("it seems that there is a massive lift in here         \nit is not functional, apperantly there is a glitch somewhere?");
-                        lasty = y++;
+                            PrintLn("it seems that there is a massive lift in here         \nit is not functional, apperantly there is a glitch somewhere?");
+                            lasty = y++;
                         }
                         else if (map[y, x] == -3 && map[20, 34] == -2)
                         {
-                        PrintLn("The door dosen't open, apperantly the Judge has the key");
-                        y++;
+                            PrintLn("The door dosen't open, apperantly the Judge has the key");
+                            y++;
                         }
                         else if (map[y, x] == -4 && map[200, 43] == -3)
                         {
-                        PrintLn("The door dosen't open, apperantly the Jurry has the key");
-                        y++;
+                            PrintLn("The door dosen't open, apperantly the Jurry has the key");
+                            y++;
                         }
                         else if (map[y, x] == -5 && map[32, 150] == -4)
                         {
-                        PrintLn("The door dosen't open, apperantly the Exocutioner has the key");
-                        y++;
+                            PrintLn("The door dosen't open, apperantly the Exocutioner has the key");
+                            y++;
                         }
                         else lasty = y + 1;
                         Console.ReadLine();
                     }
-                    
+
                 }
                 Console.Clear();
                 Console.WriteLine("\\        /      _____      |           |       |              _____          _____        _____   _________");
@@ -676,3 +745,11 @@ namespace tba
         }
     }
 }
+/*
+TextWriter wsv = new StreamWriter("sav.txt");
+            wsv.WriteLine("Eloo, World");
+            wsv.Close();
+            TextReader svf = new StreamReader("sav.txt");
+            Console.Write(svf.ReadLine());
+            svf.Close();
+*/
