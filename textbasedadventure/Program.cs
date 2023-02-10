@@ -162,7 +162,7 @@ namespace tba
                     TextReader svf = new StreamReader("sav.txt");
                     xp = int.Parse(svf.ReadLine());
                     next = int.Parse(svf.ReadLine());
-                    for (int i = -1; i < int.Parse(svf.ReadLine()); i++) Console.WriteLine(svf.ReadLine());
+                    for (int i = 1; i < int.Parse(svf.ReadLine()); i++) Console.WriteLine(svf.ReadLine());
                     win = true;
                     maxinv = int.Parse(svf.ReadLine());
                     hp = float.Parse(svf.ReadLine());
