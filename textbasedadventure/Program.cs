@@ -129,25 +129,42 @@ namespace tba
             int edmg = 0;
             float tempdmg;
             float etempdmg;
-            string opt;
+            string? opt;
             int temp;
             var templist = new List<float>();
             string name = "";
             Console.SetWindowSize(160, 40);
-            if (!sav)
+            Print("I herby declare that i ");
+            string plname = Console.ReadLine();
+            Console.SetCursorPosition(23 + plname.Length, 0);
+            PrintLn(" will serve the eternal guild with my soul untill i am released, i also am aware that if i shuld fall during the completion of a quest my mind and soul will be retured to the time and place i was issued that quest.");
+            Console.Read();
+            
+            
+            
+            TextReader svf = new StreamReader("sco.txt");
+            while(true)
             {
-                Print("I herby declare that i ");
-                string plname = Console.ReadLine();
-                Console.SetCursorPosition(23 + plname.Length, 0);
-                PrintLn(" will serve the eternal guild with my soul untill i am released, i also am aware that if i shuld fall during the completion of a quest my mind and soul will be retured to the time and place i was issued that quest.");
-                Console.Read();
+                opt = svf.ReadLine()
+                if (opt == null)
+                {
+                    
+                }
+                else if (plname == opt.Split("¦")[0])
+                {
+                    
+                }
             }
+            
+            svf.Close();
+            sav = false;
+            
             
             int xp;
             int next;
             int kills = 0;
             bool win;
-            bool giveup = false;
+            bool surr = true;
 
 
 
@@ -394,9 +411,11 @@ namespace tba
                                 break;
                             case "3":
                                 res -= 0.1F;
+                                ehp = 0;
                                 x = lastx;
                                 y = lasty;
                                 PrintLn($"You ran away but the {name} destroyed some of your armour");
+                                surr = false;
                                 break;
                             default:
                                 break;
@@ -415,12 +434,14 @@ namespace tba
                         hp -= etempdmg;
                         ehp -= tempdmg;
                         Console.ReadKey();
-                        if (ehp <= 0)
+                        if (ehp <= 0 && surr)
                         {
                             xp += rand.Next(10);
                             kills++;
                             map[y, x] = 1;
                         }
+                        else if (ehp <= 0 && !surr) surr = true;
+                            
                     }
                     Console.Clear();
                     PrintLn($"player:\nHp: {hp}\nResistance: {res * 100}%\nbase damage: {dmg}-{dmg + 5}\nLvL: {xp / 1000 + 1} Xp: {xp}\nKills: {kills}\nInventory size: {maxinv + 1}\n\n");
