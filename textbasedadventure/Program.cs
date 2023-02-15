@@ -87,7 +87,7 @@ namespace tba
             if (Console.ReadLine() == "y") sav = true;
             Console.Clear();
 
-                
+
 
 
 
@@ -132,34 +132,25 @@ namespace tba
             string? opt;
             int temp;
             var templist = new List<float>();
+            string[] tempstarr;
             string name = "";
+            string plname = "";
             Console.SetWindowSize(160, 40);
-            Print("I herby declare that i ");
-            string plname = Console.ReadLine();
-            Console.SetCursorPosition(23 + plname.Length, 0);
-            PrintLn(" will serve the eternal guild with my soul untill i am released, i also am aware that if i shuld fall during the completion of a quest my mind and soul will be retured to the time and place i was issued that quest.");
-            Console.Read();
-            
-            
-            
-            TextReader svf = new StreamReader("sco.txt");
-            while(true)
+            if (!sav) 
             {
-                opt = svf.ReadLine()
-                if (opt == null)
-                {
-                    
-                }
-                else if (plname == opt.Split("¦")[0])
-                {
-                    
-                }
+                Print("I herby declare that i ");
+                plname = Console.ReadLine();
+                Console.SetCursorPosition(23 + plname.Length, 0);
+                PrintLn(" will serve the eternal guild with my soul untill i am released, i also am aware that if i shuld fall during the completion of a quest my mind and soul will be retured to the time and place i was issued that quest.");
+                Console.Read();
             }
-            
-            svf.Close();
-            sav = false;
-            
-            
+
+            float illrate = 0;
+            int illfail = 0;
+            int illwin = 0;
+            int cheese = 0;
+
+
             int xp;
             int next;
             int kills = 0;
@@ -177,9 +168,10 @@ namespace tba
                 if (sav)
                 {
                     TextReader svf = new StreamReader("sav.txt");
+                    plname = svf.ReadLine();
                     xp = int.Parse(svf.ReadLine());
                     next = int.Parse(svf.ReadLine());
-                    for (int i = 1; i < int.Parse(svf.ReadLine()); i++) Console.WriteLine(svf.ReadLine());
+                    inv = svf.ReadLine().Split("¦").Select(Int32.Parse).ToList();
                     win = true;
                     maxinv = int.Parse(svf.ReadLine());
                     hp = float.Parse(svf.ReadLine());
@@ -215,6 +207,14 @@ namespace tba
                     ehp = 0;
 
 
+                    for (int y1 = 0; y1 < 260; y1++)
+                    {
+                        for (int x1 = 0; x1 < 260; x1++)
+                        {
+                            map[x1, y1] = rand.Next(0, 4);
+                        }
+                    }
+
 
                     map[0, 0] = 1;
                     map[255, 1] = -1;
@@ -222,24 +222,58 @@ namespace tba
                     map[200, 43] = -3;
                     map[32, 150] = -4;
                     map[2, 21] = -5;
-                
 
-                    for (int y1 = 0; y1 < 260; y1++)
-                    {
-                        for (int x1 = 0; x1 < 260; x1++)
-                        {
-                            if (map[y1, x1] == null)
-                            {
-                                map[x1, y1] = rand.Next(0, 4);
-                            }
-                        }
-                    }
+
+                    
                     y = 0;
                     x = 0;
                     lastx = 0;
                     lasty = 0;
                 }
+
+
+
+
+
+
+
                 
+                TextReader scf = new StreamReader("sco.txt");
+                TextWriter tempt = new StreamWriter("temp.txt");
+                while (true)
+                {
+                    opt = scf.ReadLine();
+                    if (opt == null)
+                    {
+                        break;
+                    }
+                    else if (plname == opt.Split("¦")[0])
+                    {
+                        tempstarr = opt.Split("¦");
+                        kills = int.Parse(tempstarr[1]);
+                        illrate = float.Parse(tempstarr[2]);
+                        illfail = int.Parse(tempstarr[3]);
+                        illwin = int.Parse(tempstarr[4]);
+                        cheese = int.Parse(tempstarr[5]);
+
+                    }
+                    else
+                    {
+                        tempt.WriteLine(opt);
+                    }
+                }
+
+                scf.Close();
+
+
+
+
+
+
+
+
+
+
                 /*
                 for (int i = 0; i < 15; i++)
                 {
@@ -441,7 +475,7 @@ namespace tba
                             map[y, x] = 1;
                         }
                         else if (ehp <= 0 && !surr) surr = true;
-                            
+
                     }
                     Console.Clear();
                     PrintLn($"player:\nHp: {hp}\nResistance: {res * 100}%\nbase damage: {dmg}-{dmg + 5}\nLvL: {xp / 1000 + 1} Xp: {xp}\nKills: {kills}\nInventory size: {maxinv + 1}\n\n");
@@ -525,11 +559,12 @@ namespace tba
                     else if (opt == "save")
                     {
                         TextWriter wsv = new StreamWriter("sav.txt");
-
+                        wsv.WriteLine(plname);
                         wsv.WriteLine(xp);
                         wsv.WriteLine(next);
-                        wsv.WriteLine(inv.Count());
-                        foreach (int i in inv) wsv.WriteLine(i);
+                        wsv.Write(inv[0]);
+                        for (int i = 1; i < inv.Count(); i++) wsv.WriteLine("¦" + inv[i]);
+                        wsv.WriteLine();
                         wsv.WriteLine(maxinv);
                         wsv.WriteLine(hp);
                         wsv.WriteLine(res);
