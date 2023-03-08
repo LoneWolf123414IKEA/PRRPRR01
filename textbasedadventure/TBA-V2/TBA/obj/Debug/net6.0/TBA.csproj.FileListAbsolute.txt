@@ -1,0 +1,15 @@
+C:\Users\Admin\source\repos\TBA\TBA\bin\Debug\net6.0\TBA.exe
+C:\Users\Admin\source\repos\TBA\TBA\bin\Debug\net6.0\TBA.deps.json
+C:\Users\Admin\source\repos\TBA\TBA\bin\Debug\net6.0\TBA.runtimeconfig.json
+C:\Users\Admin\source\repos\TBA\TBA\bin\Debug\net6.0\TBA.dll
+C:\Users\Admin\source\repos\TBA\TBA\bin\Debug\net6.0\TBA.pdb
+C:\Users\Admin\source\repos\TBA\TBA\obj\Debug\net6.0\TBA.csproj.AssemblyReference.cache
+C:\Users\Admin\source\repos\TBA\TBA\obj\Debug\net6.0\TBA.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\source\repos\TBA\TBA\obj\Debug\net6.0\TBA.AssemblyInfoInputs.cache
+C:\Users\Admin\source\repos\TBA\TBA\obj\Debug\net6.0\TBA.AssemblyInfo.cs
+C:\Users\Admin\source\repos\TBA\TBA\obj\Debug\net6.0\TBA.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\TBA\TBA\obj\Debug\net6.0\TBA.dll
+C:\Users\Admin\source\repos\TBA\TBA\obj\Debug\net6.0\refint\TBA.dll
+C:\Users\Admin\source\repos\TBA\TBA\obj\Debug\net6.0\TBA.pdb
+C:\Users\Admin\source\repos\TBA\TBA\obj\Debug\net6.0\TBA.genruntimeconfig.cache
+C:\Users\Admin\source\repos\TBA\TBA\obj\Debug\net6.0\ref\TBA.dll
